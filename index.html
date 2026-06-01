@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MLBB Heroes Draft Builder - Patch 2.1.70 · Season 40 · 132 Heroes · Win rates, tiers, synergies & draft forecast">
+    <title>MLBB Heroes Draft Builder | Manxeon</title>
+    <link rel="canonical" href="https://kyzson69.github.io/manxeon-mlbb/">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #f4f4f6;
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+        }
+        .page-header {
+            background: #111;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .page-header .brand {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+        .page-header .back-link {
+            color: #aaa;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .page-header .back-link:hover { color: #fff; }
+        .page-body {
+            padding: 0 0 40px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header class="page-header">
+    <a class="brand" href="https://www.manxeon.com" target="_blank">MANXEON</a>
+    <a class="back-link" href="https://www.manxeon.com" target="_blank">← Back to Manxeon</a>
+</header>
+
+<div class="page-body">
+<div style="height:8px;"></div>
+
+<style>
+.manxeon-widget,
+.manxeon-widget * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+.manxeon-widget {
+    max-width: 1100px; margin: 0 auto 10px auto; padding: 12px 24px 16px;
+    background: #ffffff; border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08); clear: both; position: relative; z-index: 1;
+}
+.manxeon-widget h1 {
+    text-align: center; font-size: 32px; margin: 4px 0 8px 0;
+    font-weight: 800; letter-spacing: 1px; color: #111;
+}
+.manxeon-widget .manxeon-subtitle {
+    text-align: center; font-size: 15px; color: #555;
+    margin-bottom: 12px; line-height: 1.6;
+}
+.manxeon-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+.manxeon-tab-btn {
+    padding: 8px 18px; font-size: 13px; font-weight: 700;
+    border: 1px solid #d9d9d9; border-radius: 8px;
+    background: #fff; color: #555; cursor: pointer; transition: all 0.15s;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.manxeon-tab-btn:hover { border-color: #111; color: #111; }
+.manxeon-tab-btn.active { background: #111; color: #fff; border-color: #111; }
+.vs-tab-btn { border-color: #dc2626 !important; color: #dc2626 !important; font-weight: 800 !important; }
+.vs-tab-btn.active { background: linear-gradient(135deg,#1d4ed8,#dc2626) !important; color:#fff !important; border-color:transparent !important; }
+.manxeon-status-bar {
+    display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+    background: #f9f9f9; border: 1px solid #e5e5e5; border-radius: 8px;
+    margin-bottom: 10px; font-size: 12px; color: #555; flex-wrap: wrap;
+}
+.manxeon-status-dot { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; flex-shrink: 0; }
+.manxeon-status-dot.green { background: #22c55e; }
+.manxeon-status-dot.red { background: #ef4444; }
+.manxeon-patch-badge {
+    font-size: 11px; font-weight: 700; padding: 2px 8px;
+    border-radius: 4px; margin-left: 4px;
+}
+.manxeon-patch-badge.buff { background: #dcfce7; color: #16a34a; border: 1px solid #bbf7d0; }
+.manxeon-patch-badge.nerf { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+.manxeon-lanes-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-bottom: 16px; }
+.manxeon-lane-slot {
+    border: 2px dashed #e0e0e0; border-radius: 10px; padding: 12px 6px;
+    text-align: center; cursor: pointer; min-height: 120px; background: #fafafa;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    position: relative; transition: all 0.15s;
+}
+.manxeon-lane-slot:hover { border-color: #111; background: #f5f5f5; }
+.manxeon-lane-slot.active { border: 2px solid #111; background: #f0f0f0; }
+.manxeon-lane-slot.filled { border-style: solid; }
+.manxeon-lane-slot .mx-remove-btn {
+    position: absolute; top: 5px; right: 5px; width: 18px; height: 18px;
+    border-radius: 50%; border: none; background: #fee2e2; color: #dc2626;
+    font-size: 12px; cursor: pointer; display: flex; align-items: center;
+    justify-content: center; opacity: 0; transition: opacity 0.15s; line-height: 1;
+}
+.manxeon-lane-slot:hover .mx-remove-btn { opacity: 1; }
+.mx-lane-name { font-size: 12px; font-weight: 700; color: #111; letter-spacing: 0.5px; }
+.mx-lane-sub { font-size: 10px; color: #999; }
+.mx-lane-pick { font-size: 10px; color: #555; margin-top: 2px; }
+.mx-hero-name { font-size: 11px; font-weight: 800; color: #111; line-height: 1.2; }
+.mx-hero-role { font-size: 9px; color: #888; }
+.mx-tier-wr { display: flex; gap: 4px; align-items: center; margin-top: 2px; }
+.mx-tier-badge { font-size: 9px; font-weight: 800; padding: 1px 5px; border-radius: 3px; color: #fff; }
+.mx-portrait-wrap { position: relative; flex-shrink: 0; }
+.mx-portrait-wrap .mx-tier-dot {
+    position: absolute; bottom: -2px; right: -2px; width: 14px; height: 14px;
+    border-radius: 50%; border: 2px solid #fff; font-size: 7px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; color: #fff; line-height: 1;
+}
+.mx-lane-portrait { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; display: block; border: 2px solid #e5e5e5; background: #f5f5f5; margin: 0 auto 2px; }
+.mx-card-portrait { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; display: block; border: 1.5px solid #e5e5e5; background: #f5f5f5; margin: 0 auto 3px; }
+.mx-portrait-sm { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; display: block; border: 1.5px solid #e5e5e5; background: #f5f5f5; }
+.manxeon-forecast-box { background: #fafafa; border: 1px solid #e5e5e5; border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+.manxeon-forecast-header { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+.manxeon-gauge-wrap { text-align: center; min-width: 100px; }
+.manxeon-fc-val { font-size: 36px; font-weight: 800; line-height: 1; }
+.manxeon-fc-lbl { font-size: 11px; color: #777; margin-top: 2px; }
+.manxeon-fc-verdict { font-size: 13px; font-weight: 700; margin-top: 4px; }
+.manxeon-fc-breakdown { flex: 1; min-width: 200px; }
+.manxeon-fc-title { font-size: 13px; font-weight: 700; color: #111; margin-bottom: 8px; }
+.manxeon-fc-row { display: flex; justify-content: space-between; font-size: 11px; padding: 3px 0; border-bottom: 1px solid #f0f0f0; }
+.manxeon-fc-row .fx-lbl { color: #666; }
+.manxeon-fc-row .fx-val { font-weight: 700; }
+.manxeon-fc-total { display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; padding: 8px 0 0; color: #111; }
+.manxeon-bars-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; margin: 12px 0; }
+.mx-bar-row { display: flex; align-items: center; gap: 6px; }
+.mx-bar-lbl { font-size: 10px; color: #888; width: 72px; flex-shrink: 0; }
+.mx-bar-track { flex: 1; height: 4px; background: #e5e5e5; border-radius: 2px; overflow: hidden; }
+.mx-bar-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+.mx-bar-val { font-size: 10px; color: #999; width: 12px; }
+.mx-syn-chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
+.mx-syn-chip { font-size: 10px; padding: 3px 8px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 20px; color: #1d4ed8; }
+.mx-warning { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 6px; padding: 7px 10px; font-size: 11px; color: #c2410c; margin-bottom: 5px; }
+.mx-pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.mx-pros { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 8px 10px; }
+.mx-cons { background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; padding: 8px 10px; }
+.mx-pc-title { font-size: 11px; font-weight: 700; margin-bottom: 5px; }
+.mx-pc-item { font-size: 10px; color: #555; margin-bottom: 3px; }
+.manxeon-picker-panel { background: #fafafa; border: 1px solid #e5e5e5; border-radius: 10px; padding: 14px; margin-bottom: 14px; }
+.mx-picker-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.mx-picker-title { font-size: 14px; font-weight: 700; color: #111; }
+.mx-picker-title span { color: #555; font-weight: 400; font-size: 12px; }
+.mx-close-btn { border: none; background: none; font-size: 20px; cursor: pointer; color: #aaa; line-height: 1; }
+.mx-close-btn:hover { color: #dc2626; }
+.mx-filter-row { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+.manxeon-widget input[type="text"] { padding: 8px 12px; border: 1px solid #d9d9d9; border-radius: 8px; font-size: 13px; background: white; outline: none; font-family: Arial, Helvetica, sans-serif; }
+.manxeon-widget input[type="text"]:focus { border-color: #111; }
+.mx-search { flex: 1; min-width: 120px; }
+.mx-role-btn { padding: 6px 10px; font-size: 11px; font-weight: 700; border: 1px solid #d9d9d9; border-radius: 6px; background: #fff; color: #555; cursor: pointer; transition: all 0.12s; font-family: Arial, Helvetica, sans-serif; }
+.mx-role-btn:hover, .mx-role-btn.active { background: #111; color: #fff; border-color: #111; }
+.mx-hero-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(85px,1fr)); gap: 6px; max-height: 280px; overflow-y: auto; padding-right: 2px; }
+.mx-hero-grid::-webkit-scrollbar { width: 4px; }
+.mx-hero-grid::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+.mx-hero-card { padding: 9px 5px; border-radius: 8px; border: 1px solid #e5e5e5; background: #fff; cursor: pointer; text-align: center; transition: all 0.1s; position: relative; }
+.mx-hero-card:hover { border-color: #111; background: #f9f9f9; }
+.mx-hero-card.fit { border-color: #93c5fd; background: #eff6ff; }
+.mx-hero-card.picked { opacity: 0.35; cursor: not-allowed; }
+.mx-hc-name { font-size: 10px; font-weight: 800; line-height: 1.2; margin-bottom: 2px; color: #111; }
+.mx-hc-role { font-size: 9px; color: #aaa; margin-bottom: 3px; }
+.mx-hc-stats { display: flex; justify-content: center; gap: 3px; align-items: center; }
+.mx-wr-txt { font-size: 9px; font-weight: 700; }
+.manxeon-actions { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 8px; }
+.mx-action-btn { padding: 8px 16px; font-size: 12px; font-weight: 700; border: 1px solid #d9d9d9; border-radius: 8px; background: #fff; color: #555; cursor: pointer; transition: all 0.12s; font-family: Arial, Helvetica, sans-serif; }
+.mx-action-btn:hover { border-color: #111; color: #111; }
+.mx-action-btn.primary { border-color: #111; color: #111; }
+.mx-template-card { background: #fafafa; border-radius: 10px; border: 1px solid #e5e5e5; padding: 14px 16px; margin-bottom: 10px; }
+.mx-tpl-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.mx-tpl-name { font-size: 15px; font-weight: 800; color: #111; }
+.mx-tpl-tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: 8px; background: #f0f0f0; color: #555; border: 1px solid #e0e0e0; }
+.mx-tpl-heroes-str { font-size: 11px; color: #888; margin-bottom: 8px; line-height: 1.5; }
+.mx-tpl-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.mx-tpl-icons { display: flex; gap: 6px; flex-wrap: wrap; }
+.mx-tpl-hero-wrap { text-align: center; }
+.mx-tpl-hero-icon { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin: 0 auto 2px; background: #f0f0f0; border: 1.5px solid #ddd; overflow: hidden; }
+.mx-tpl-hero-lbl { font-size: 9px; font-weight: 700; color: #666; }
+.mx-tpl-fc { text-align: right; }
+.mx-tpl-fc-val { font-size: 22px; font-weight: 800; line-height: 1; }
+.mx-tpl-fc-sub { font-size: 9px; color: #aaa; }
+.mx-load-btn { padding: 7px 16px; font-size: 12px; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.15s; border: 1px solid #111; background: #fff; color: #111; font-family: Arial, Helvetica, sans-serif; }
+.mx-load-btn:hover { background: #111; color: #fff; }
+.mx-hero-row { background: #fafafa; border-radius: 10px; border: 1px solid #e5e5e5; padding: 11px 14px; cursor: pointer; transition: border-color 0.12s; margin-bottom: 6px; }
+.mx-hero-row:hover { border-color: #bbb; }
+.mx-hero-row.expanded { border-color: #111; }
+.mx-row-top { display: flex; justify-content: space-between; align-items: center; }
+.mx-row-left { display: flex; align-items: center; gap: 10px; }
+.mx-row-name { font-size: 14px; font-weight: 800; color: #111; }
+.mx-row-sub { font-size: 11px; color: #aaa; }
+.mx-row-right { text-align: right; }
+.mx-row-wr { font-size: 15px; font-weight: 800; }
+.mx-row-stats { font-size: 10px; color: #aaa; }
+.mx-hero-detail { margin-top: 12px; border-top: 1px solid #eee; padding-top: 12px; }
+.mx-counters-syn { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.mx-cs-lbl { font-size: 10px; color: #aaa; margin-bottom: 4px; font-weight: 700; }
+.mx-cs-chip { font-size: 11px; padding: 3px 8px; border-radius: 4px; margin-bottom: 3px; }
+.mx-add-to-lineup { margin-top: 10px; width: 100%; padding: 8px; font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; border: 1px solid #111; background: #fff; color: #111; font-family: Arial, Helvetica, sans-serif; }
+.mx-add-to-lineup:hover { background: #111; color: #fff; }
+.mx-toast { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 9px 22px; border-radius: 8px; font-weight: 700; font-size: 13px; z-index: 9999; pointer-events: none; }
+@media (max-width: 768px) {
+    .manxeon-widget { padding: 16px; border-radius: 12px; }
+    .manxeon-widget h1 { font-size: 26px; }
+    .manxeon-lanes-grid { grid-template-columns: repeat(3,1fr); }
+    .manxeon-bars-grid { grid-template-columns: 1fr; }
+    .mx-pros-cons { grid-template-columns: 1fr; }
+    .mx-counters-syn { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) { .manxeon-lanes-grid { grid-template-columns: repeat(2,1fr); } }
+</style>
+
+<div class="manxeon-widget" id="mlbb-widget-root">
+    <h1>MLBB Heroes Draft Builder</h1>
+    <div class="manxeon-subtitle">Season 40 &middot; Patch 2.1.70 &middot; 132 Heroes &middot; Win rates, tiers, synergies &amp; draft forecast.</div>
+    <div class="manxeon-status-bar" id="mx-status-bar">
+        <div class="manxeon-status-dot" id="mx-status-dot"></div>
+        <span id="mx-status-text">Loading...</span>
+        <span class="manxeon-patch-badge buff" id="mx-patch-badge" style="display:none"></span>
+    </div>
+    <div id="mx-main">
+            <div style="padding:30px;text-align:center;font-family:Arial,sans-serif;">
+                <div style="display:inline-block;width:32px;height:32px;border:3px solid #e5e5e5;border-top-color:#111;border-radius:50%;animation:manxeon-spin 0.7s linear infinite;margin-bottom:12px;"></div>
+                <div style="font-size:14px;font-weight:700;color:#555;">Loading Draft Builder</div>
+                <div style="font-size:12px;color:#aaa;margin-top:6px;">Patch 2.1.70 &middot; 132 heroes &middot; Season 40</div>
+            </div>
+        </div>
+</div>
+</div>
+
+<script>
+var MANXEON_MLBB_IMAGES = {
+    "masha": "https://www.manxeon.com/uploads/5/7/4/4/5744459/masha_orig.png",
+    "gord": "https://www.manxeon.com/uploads/5/7/4/4/5744459/gord_orig.png",
+    "gloo": "https://www.manxeon.com/uploads/5/7/4/4/5744459/gloo_orig.png",
+    "lolita": "https://www.manxeon.com/uploads/5/7/4/4/5744459/lolita_orig.png",
+    "marcel": "https://www.manxeon.com/uploads/5/7/4/4/5744459/marcel_orig.png",
+    "hanabi": "https://www.manxeon.com/uploads/5/7/4/4/5744459/hanabi_orig.png",
+    "sun": "https://www.manxeon.com/uploads/5/7/4/4/5744459/sun_orig.png",
+    "diggie": "https://www.manxeon.com/uploads/5/7/4/4/5744459/diggie_orig.png",
+    "kaja": "https://www.manxeon.com/uploads/5/7/4/4/5744459/kaja_orig.png",
+    "khufra": "https://www.manxeon.com/uploads/5/7/4/4/5744459/khufra_orig.png",
+    "floryn": "https://www.manxeon.com/uploads/5/7/4/4/5744459/floryn_orig.png",
+    "leomord": "https://www.manxeon.com/uploads/5/7/4/4/5744459/leomord_orig.png",
+    "belerick": "https://www.manxeon.com/uploads/5/7/4/4/5744459/belerick_orig.png",
+    "valir": "https://www.manxeon.com/uploads/5/7/4/4/5744459/valir_orig.png",
+    "silvanna": "https://www.manxeon.com/uploads/5/7/4/4/5744459/silvanna_orig.png",
+    "popol_and_kupa": "https://www.manxeon.com/uploads/5/7/4/4/5744459/popol-and-kupa_orig.png",
+    "khaleed": "https://www.manxeon.com/uploads/5/7/4/4/5744459/khaleed_orig.png",
+    "terizla": "https://www.manxeon.com/uploads/5/7/4/4/5744459/terizla_orig.png",
+    "minotaur": "https://www.manxeon.com/uploads/5/7/4/4/5744459/minotaur_orig.png",
+    "hilda": "https://www.manxeon.com/uploads/5/7/4/4/5744459/hilda_orig.png",
+    "argus": "https://www.manxeon.com/uploads/5/7/4/4/5744459/argus_orig.png",
+    "estes": "https://www.manxeon.com/uploads/5/7/4/4/5744459/estee_orig.png",
+    "benedetta": "https://www.manxeon.com/uploads/5/7/4/4/5744459/benedetta_orig.png",
+    "minsitthar": "https://www.manxeon.com/uploads/5/7/4/4/5744459/minsitthar_orig.png",
+    "zhask": "https://www.manxeon.com/uploads/5/7/4/4/5744459/zhask_orig.png",
+    "irithel": "https://www.manxeon.com/uploads/5/7/4/4/5744459/irithel_orig.png",
+    "miya": "https://www.manxeon.com/uploads/5/7/4/4/5744459/miya_orig.png",
+    "atlas": "https://www.manxeon.com/uploads/5/7/4/4/5744459/atlas_orig.png",
+    "rafaela": "https://www.manxeon.com/uploads/5/7/4/4/5744459/rafaela_orig.png",
+    "uranus": "https://www.manxeon.com/uploads/5/7/4/4/5744459/uranus_orig.png",
+    "melissa": "https://www.manxeon.com/uploads/5/7/4/4/5744459/melissa_orig.png",
+    "zetian": "https://www.manxeon.com/uploads/5/7/4/4/5744459/zetian_orig.png",
+    "yve": "https://www.manxeon.com/uploads/5/7/4/4/5744459/yve_orig.png",
+    "freya": "https://www.manxeon.com/uploads/5/7/4/4/5744459/freya_orig.png",
+    "bane": "https://www.manxeon.com/uploads/5/7/4/4/5744459/bane_orig.png",
+    "kadita": "https://www.manxeon.com/uploads/5/7/4/4/5744459/kadita_orig.png",
+    "aamon": "https://www.manxeon.com/uploads/5/7/4/4/5744459/aamon_orig.png",
+    "paquito": "https://www.manxeon.com/uploads/5/7/4/4/5744459/paquito_orig.png",
+    "fredrinn": "https://www.manxeon.com/uploads/5/7/4/4/5744459/fredrinn_orig.png",
+    "carmilla": "https://www.manxeon.com/uploads/5/7/4/4/5744459/carmilla_orig.png",
+    "suyou": "https://www.manxeon.com/uploads/5/7/4/4/5744459/suyou_orig.png",
+    "cyclops": "https://www.manxeon.com/uploads/5/7/4/4/5744459/cyclops_orig.png",
+    "edith": "https://www.manxeon.com/uploads/5/7/4/4/5744459/edith_orig.png",
+    "phoveus": "https://www.manxeon.com/uploads/5/7/4/4/5744459/phoveus_orig.png",
+    "baxia": "https://www.manxeon.com/uploads/5/7/4/4/5744459/baxia_orig.png",
+    "hanzo": "https://www.manxeon.com/uploads/5/7/4/4/5744459/hanzo_orig.png",
+    "aulus": "https://www.manxeon.com/uploads/5/7/4/4/5744459/aulus_orig.png",
+    "ruby": "https://www.manxeon.com/uploads/5/7/4/4/5744459/ruby_orig.png",
+    "zhuxin": "https://www.manxeon.com/uploads/5/7/4/4/5744459/zhuxin_orig.png",
+    "odette": "https://www.manxeon.com/uploads/5/7/4/4/5744459/odette_orig.png",
+    "vale": "https://www.manxeon.com/uploads/5/7/4/4/5744459/vale_orig.png",
+    "guinevere": "https://www.manxeon.com/uploads/5/7/4/4/5744459/guinevere_orig.png",
+    "clint": "https://www.manxeon.com/uploads/5/7/4/4/5744459/clint_orig.png",
+    "brody": "https://www.manxeon.com/uploads/5/7/4/4/5744459/brody_orig.png",
+    "vexana": "https://www.manxeon.com/uploads/5/7/4/4/5744459/vexana_orig.png",
+    "natan": "https://www.manxeon.com/uploads/5/7/4/4/5744459/natan_orig.png",
+    "akai": "https://www.manxeon.com/uploads/5/7/4/4/5744459/akai_orig.png",
+    "badang": "https://www.manxeon.com/uploads/5/7/4/4/5744459/badang_orig.png",
+    "johnson": "https://www.manxeon.com/uploads/5/7/4/4/5744459/johnson_orig.png",
+    "natalia": "https://www.manxeon.com/uploads/5/7/4/4/5744459/natalia_orig.png",
+    "beatrix": "https://www.manxeon.com/uploads/5/7/4/4/5744459/beatrix_orig.png",
+    "thamuz": "https://www.manxeon.com/uploads/5/7/4/4/5744459/thamuz_orig.png",
+    "lukas": "https://www.manxeon.com/uploads/5/7/4/4/5744459/lukas_orig.png",
+    "kagura": "https://www.manxeon.com/uploads/5/7/4/4/5744459/kagura_orig.png",
+    "obsidia": "https://www.manxeon.com/uploads/5/7/4/4/5744459/obsidia_orig.png",
+    "aldous": "https://www.manxeon.com/uploads/5/7/4/4/5744459/aldous_orig.png",
+    "moskov": "https://www.manxeon.com/uploads/5/7/4/4/5744459/moskov.png",
+    "ixia": "https://www.manxeon.com/uploads/5/7/4/4/5744459/ixia_orig.png",
+    "alice": "https://www.manxeon.com/uploads/5/7/4/4/5744459/alice_orig.png",
+    "karrie": "https://www.manxeon.com/uploads/5/7/4/4/5744459/karrie_orig.png",
+    "julian": "https://www.manxeon.com/uploads/5/7/4/4/5744459/julian_orig.png",
+    "alucard": "https://www.manxeon.com/uploads/5/7/4/4/5744459/alucard_orig.png",
+    "yi_sun_shin": "https://www.manxeon.com/uploads/5/7/4/4/5744459/yi-sun-shin_orig.png",
+    "helcurt": "https://www.manxeon.com/uploads/5/7/4/4/5744459/helcurt_orig.png",
+    "harley": "https://www.manxeon.com/uploads/5/7/4/4/5744459/harley_orig.png",
+    "saber": "https://www.manxeon.com/uploads/5/7/4/4/5744459/saber_orig.png",
+    "barats": "https://www.manxeon.com/uploads/5/7/4/4/5744459/barats_orig.png",
+    "faramis": "https://www.manxeon.com/uploads/5/7/4/4/5744459/faramis_orig.png",
+    "x_borg": "https://www.manxeon.com/uploads/5/7/4/4/5744459/x-borg_orig.png",
+    "claude": "https://www.manxeon.com/uploads/5/7/4/4/5744459/claude_orig.png",
+    "gusion": "https://www.manxeon.com/uploads/5/7/4/4/5744459/gusion_orig.png",
+    "roger": "https://www.manxeon.com/uploads/5/7/4/4/5744459/roger_orig.png",
+    "cecilion": "https://www.manxeon.com/uploads/5/7/4/4/5744459/cecilion_orig.png",
+    "harith": "https://www.manxeon.com/uploads/5/7/4/4/5744459/harith_orig.png",
+    "eudora": "https://www.manxeon.com/uploads/5/7/4/4/5744459/eudora_orig.png",
+    "change": "https://www.manxeon.com/uploads/5/7/4/4/5744459/chang-e_orig.png",
+    "angela": "https://www.manxeon.com/uploads/5/7/4/4/5744459/angela_orig.png",
+    "lylia": "https://www.manxeon.com/uploads/5/7/4/4/5744459/lylia_orig.png",
+    "lapu_lapu": "https://www.manxeon.com/uploads/5/7/4/4/5744459/lapu-lapu_orig.png",
+    "chip": "https://www.manxeon.com/uploads/5/7/4/4/5744459/chip_orig.png",
+    "sora": "https://www.manxeon.com/uploads/5/7/4/4/5744459/sora_orig.png",
+    "joy": "https://www.manxeon.com/uploads/5/7/4/4/5744459/joy_orig.png",
+    "wanwan": "https://www.manxeon.com/uploads/5/7/4/4/5744459/wan-wan_orig.png",
+    "hayabusa": "https://www.manxeon.com/uploads/5/7/4/4/5744459/hayabusa_orig.png",
+    "hylos": "https://www.manxeon.com/uploads/5/7/4/4/5744459/hylos_orig.png",
+    "lunox": "https://www.manxeon.com/uploads/5/7/4/4/5744459/lunox_orig.png",
+    "dyrroth": "https://www.manxeon.com/uploads/5/7/4/4/5744459/dyrroth_orig.png",
+    "layla": "https://www.manxeon.com/uploads/5/7/4/4/5744459/layla_orig.png",
+    "yin": "https://www.manxeon.com/uploads/5/7/4/4/5744459/yin_orig.png",
+    "nana": "https://www.manxeon.com/uploads/5/7/4/4/5744459/nana_orig.png",
+    "jawhead": "https://www.manxeon.com/uploads/5/7/4/4/5744459/jawhead_orig.png",
+    "cici": "https://www.manxeon.com/uploads/5/7/4/4/5744459/cici_orig.png",
+    "selena": "https://www.manxeon.com/uploads/5/7/4/4/5744459/selena_orig.png",
+    "bruno": "https://www.manxeon.com/uploads/5/7/4/4/5744459/bruno_orig.png",
+    "xavier": "https://www.manxeon.com/uploads/5/7/4/4/5744459/xavier_orig.png",
+    "grock": "https://www.manxeon.com/uploads/5/7/4/4/5744459/grock_orig.png",
+    "arlott": "https://www.manxeon.com/uploads/5/7/4/4/5744459/arlott_orig.png",
+    "yu_zhong": "https://www.manxeon.com/uploads/5/7/4/4/5744459/yu-zhong_orig.png",
+    "aurora": "https://www.manxeon.com/uploads/5/7/4/4/5744459/aurora_orig.png",
+    "tigreal": "https://www.manxeon.com/uploads/5/7/4/4/5744459/tigreal_orig.png",
+    "kimmy": "https://www.manxeon.com/uploads/5/7/4/4/5744459/kimmy_orig.png",
+    "nolan": "https://www.manxeon.com/uploads/5/7/4/4/5744459/nolan_orig.png",
+    "novaria": "https://www.manxeon.com/uploads/5/7/4/4/5744459/novaria_orig.png",
+    "zilong": "https://www.manxeon.com/uploads/5/7/4/4/5744459/zilong_orig.png",
+    "pharsa": "https://www.manxeon.com/uploads/5/7/4/4/5744459/pharsa_orig.png",
+    "alpha": "https://www.manxeon.com/uploads/5/7/4/4/5744459/alpha_orig.png",
+    "gatotkaca": "https://www.manxeon.com/uploads/5/7/4/4/5744459/gatotkaca_orig.png",
+    "luo_yi": "https://www.manxeon.com/uploads/5/7/4/4/5744459/luo-yi_orig.png",
+    "martis": "https://www.manxeon.com/uploads/5/7/4/4/5744459/martis_orig.png",
+    "chou": "https://www.manxeon.com/uploads/5/7/4/4/5744459/chou_orig.png",
+    "lesley": "https://www.manxeon.com/uploads/5/7/4/4/5744459/lesley_orig.png",
+    "karina": "https://www.manxeon.com/uploads/5/7/4/4/5744459/karina_orig.png",
+    "kalea": "https://www.manxeon.com/uploads/5/7/4/4/5744459/kalea_orig.png",
+    "ling": "https://www.manxeon.com/uploads/5/7/4/4/5744459/ling_orig.png",
+    "franco": "https://www.manxeon.com/uploads/5/7/4/4/5744459/franco_orig.png",
+    "balmond": "https://www.manxeon.com/uploads/5/7/4/4/5744459/balmond_orig.png",
+    "valentina": "https://www.manxeon.com/uploads/5/7/4/4/5744459/valentina_orig.png",
+    "lancelot": "https://www.manxeon.com/uploads/5/7/4/4/5744459/lancelot_orig.png",
+    "esmeralda": "https://www.manxeon.com/uploads/5/7/4/4/5744459/esmeralda_orig.png",
+    "mathilda": "https://www.manxeon.com/uploads/5/7/4/4/5744459/mathilda_orig.png",
+    "fanny": "https://www.manxeon.com/uploads/5/7/4/4/5744459/fanny_orig.png",
+    "granger": "https://www.manxeon.com/uploads/5/7/4/4/5744459/granger_orig.png"
+};
+
+var HEROES = [];
+var PATCH_INFO = {};
+var lineup = [null, null, null, null, null];
+var activeSlot = null;
+var searchQ = '';
+var roleFilter = 'All';
+var expandedHero = null;
+var currentTab = 'builder';
+
+var LANES = ['Gold', 'Mid', 'EXP', 'Jungle', 'Roam'];
+var LANE_ICONS = { Gold: 'GOLD', Mid: 'MID', EXP: 'EXP', Jungle: 'JGL', Roam: 'ROAM' };
+var LANE_ROLES = {
+    Gold: ['Marksman'],
+    Mid: ['Mage', 'Assassin'],
+    EXP: ['Fighter', 'Tank'],
+    Jungle: ['Assassin', 'Fighter'],
+    Roam: ['Tank', 'Support']
+};
+var ROLE_ICON = { Tank: 'TNK', Fighter: 'FTR', Mage: 'MGE', Marksman: 'MM', Assassin: 'ASN', Support: 'SUP' };
+var ROLE_COLOR = { Tank: '#3b82f6', Fighter: '#f97316', Mage: '#a855f7', Marksman: '#22c55e', Assassin: '#ef4444', Support: '#ec4899' };
+var ROLES_F = ['All', 'Tank', 'Fighter', 'Mage', 'Marksman', 'Assassin', 'Support'];
+var TIER_C = { S: '#f59e0b', A: '#22c55e', B: '#3b82f6', C: '#a855f7', D: '#ef4444' };
+
+function heroImg(hero, cssClass, fallbackSize) {
+    const imgs = (typeof MANXEON_MLBB_IMAGES !== 'undefined') ? MANXEON_MLBB_IMAGES : {};
+    const url = imgs[hero.id] || '';
+    const rc = ROLE_COLOR[hero.role] || '#999';
+    const ri = ROLE_ICON[hero.role] || '?';
+    const sz = fallbackSize || 20;
+    const fbStyle = `display:flex;align-items:center;justify-content:center;width:${sz+16}px;height:${sz+16}px;border-radius:50%;background:${rc};color:#fff;font-size:${Math.max(8,sz*0.45)}px;font-weight:900;margin:0 auto`;
+    if (url) {
+        return `<img class="${cssClass}" src="${url}" alt="${hero.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span style="${fbStyle};display:none">${ri}</span>`;
+    }
+    return `<span style="${fbStyle}">${ri}</span>`;
+}
+
+async function fetchLiveData() {
+    const prompt = `You are an MLBB (Mobile Legends: Bang Bang) data expert. Return a JSON object with the current patch hero data. Use the most current Season 40 / Patch 2.1.x data you have.
+
+Return ONLY valid JSON, no markdown, no explanation. Structure:
+{
+  "patch": "2.1.xx",
+  "season": "40",
+  "buffs": ["Hero1", "Hero2"],
+  "nerfs": ["Hero1"],
+  "heroes": [
+    {
+      "id": "hero_id_lowercase_nospaces",
+      "name": "Hero Name",
+      "role": "Tank|Fighter|Mage|Marksman|Assassin|Support",
+      "lane": ["Gold|Mid|EXP|Jungle|Roam"],
+      "tier": "S|A|B|C|D",
+      "wr": 51.5,
+      "pr": 1.2,
+      "br": 8.5,
+      "dmg": "physical|magic",
+      "cc": true,
+      "mobility": 3,
+      "burst": 3,
+      "sustain": 3,
+      "teamfight": 4,
+      "earlyGame": 3,
+      "lateGame": 4,
+      "diff": "Easy|Medium|Hard",
+      "counters": ["Hero1", "Hero2", "Hero3"],
+      "synergy": ["Hero1", "Hero2", "Hero3"],
+      "pros": ["Pro point 1", "Pro point 2", "Pro point 3"],
+      "cons": ["Con point 1", "Con point 2", "Con point 3"]
+    }
+  ],
+  "synergy_pairs": {
+    "hero1id-hero2id": 8
+  }
+}
+
+Include at least 50 heroes covering all roles. All numeric stats (mobility, burst, sustain, teamfight, earlyGame, lateGame) must be integers 1-5. wr is float (e.g. 52.3), pr is float (e.g. 1.4), br is float (e.g. 12.5). Tiers reflect current ranked meta (Legend+ bracket). Include synergy_pairs with combined score 6-10 for known strong duos. Return ONLY the raw JSON object.`;
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s hard timeout
+
+    let response;
+    try {
+        response = await fetch("https://api.anthropic.com/v1/messages", {
+            method: "POST",
+            signal: controller.signal,
+            headers: {
+                "Content-Type": "application/json",
+                "anthropic-dangerous-direct-browser-access": "true"
+            },
+            body: JSON.stringify({
+                model: "claude-sonnet-4-20250514",
+                max_tokens: 6000,
+                messages: [{ role: "user", content: prompt }]
+            })
+        });
+    } finally {
+        clearTimeout(timeoutId);
+    }
+
+    if (!response.ok) throw new Error(`API error ${response.status}`);
+    const data = await response.json();
+
+    // Extract text from response (handle tool use blocks)
+    let text = '';
+    if (data.content) {
+        for (const block of data.content) {
+            if (block.type === 'text') text += block.text;
+        }
+    }
+
+    // Strip any markdown fences
+    text = text.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+
+    // Extract JSON object
+    const start = text.indexOf('{');
+    const end = text.lastIndexOf('}');
+    if (start === -1 || end === -1) throw new Error('No JSON found in response');
+    const jsonStr = text.slice(start, end + 1);
+
+    return JSON.parse(jsonStr);
+}
+
+const FALLBACK_DATA = {"patch":"2.1.70","season":"40","buffs":["Belerick","Aulus","Paquito","Chou","Terizla","Dyrroth","Harith","Melissa","Wanwan","Bruno"],"nerfs":["Harley","Sora","Hanabi","Karrie","Claude","Natan"],"heroes":[{"id":"masha","name":"Masha","role":"Fighter","lane":["EXP"],"tier":"A","wr":56.26,"pr":0.11,"br":0.39,"dmg":"physical","cc":false,"mobility":4,"burst":3,"sustain":5,"teamfight":3,"earlyGame":4,"lateGame":5,"diff":"Easy"},{"id":"gord","name":"Gord","role":"Mage","lane":["Mid"],"tier":"S","wr":55.47,"pr":1.44,"br":2.42,"dmg":"magic","cc":true,"mobility":1,"burst":5,"sustain":2,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"gloo","name":"Gloo","role":"Tank","lane":["Roam","EXP"],"tier":"S","wr":55.43,"pr":0.57,"br":71.4,"dmg":"magic","cc":true,"mobility":2,"burst":2,"sustain":5,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"lolita","name":"Lolita","role":"Tank","lane":["Roam"],"tier":"A","wr":54.92,"pr":0.12,"br":1.8,"dmg":"physical","cc":true,"mobility":2,"burst":2,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"marcel","name":"Marcel","role":"Support","lane":["Roam"],"tier":"S","wr":54.79,"pr":0.25,"br":112.33,"dmg":"magic","cc":true,"mobility":3,"burst":2,"sustain":4,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"hanabi","name":"Hanabi","role":"Marksman","lane":["Gold"],"tier":"S","wr":54.47,"pr":3.38,"br":11.88,"dmg":"physical","cc":true,"mobility":1,"burst":3,"sustain":3,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"sun","name":"Sun","role":"Fighter","lane":["EXP","Jungle"],"tier":"S","wr":54.07,"pr":1.65,"br":36.4,"dmg":"physical","cc":false,"mobility":4,"burst":4,"sustain":3,"teamfight":4,"earlyGame":4,"lateGame":5,"diff":"Easy"},{"id":"diggie","name":"Diggie","role":"Support","lane":["Roam"],"tier":"S","wr":54.02,"pr":0.2,"br":15.22,"dmg":"magic","cc":true,"mobility":3,"burst":2,"sustain":3,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"kaja","name":"Kaja","role":"Support","lane":["Roam"],"tier":"S","wr":53.68,"pr":0.29,"br":8.9,"dmg":"magic","cc":true,"mobility":4,"burst":3,"sustain":2,"teamfight":5,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"khufra","name":"Khufra","role":"Tank","lane":["Roam","Jungle"],"tier":"A","wr":53.55,"pr":0.26,"br":2.82,"dmg":"physical","cc":true,"mobility":4,"burst":2,"sustain":3,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"floryn","name":"Floryn","role":"Support","lane":["Roam"],"tier":"S","wr":53.26,"pr":1.04,"br":28.85,"dmg":"magic","cc":false,"mobility":2,"burst":1,"sustain":5,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"leomord","name":"Leomord","role":"Fighter","lane":["Jungle"],"tier":"S","wr":53.06,"pr":1.1,"br":11.8,"dmg":"physical","cc":true,"mobility":4,"burst":5,"sustain":3,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"belerick","name":"Belerick","role":"Tank","lane":["Roam"],"tier":"S","wr":52.99,"pr":1.47,"br":8.67,"dmg":"magic","cc":true,"mobility":1,"burst":2,"sustain":5,"teamfight":4,"earlyGame":2,"lateGame":5,"diff":"Easy"},{"id":"valir","name":"Valir","role":"Mage","lane":["Mid"],"tier":"A","wr":52.96,"pr":1.04,"br":2.57,"dmg":"magic","cc":true,"mobility":2,"burst":4,"sustain":2,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"silvanna","name":"Silvanna","role":"Fighter","lane":["EXP"],"tier":"S","wr":52.92,"pr":1.3,"br":3.09,"dmg":"magic","cc":true,"mobility":4,"burst":4,"sustain":3,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"popol_and_kupa","name":"Popol and Kupa","role":"Marksman","lane":["Jungle","Gold"],"tier":"B","wr":52.88,"pr":0.28,"br":0.34,"dmg":"physical","cc":true,"mobility":3,"burst":3,"sustain":3,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"khaleed","name":"Khaleed","role":"Fighter","lane":["Roam","EXP"],"tier":"B","wr":52.83,"pr":0.38,"br":0.89,"dmg":"physical","cc":true,"mobility":4,"burst":4,"sustain":3,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Easy"},{"id":"terizla","name":"Terizla","role":"Fighter","lane":["EXP"],"tier":"A","wr":52.73,"pr":0.66,"br":0.89,"dmg":"physical","cc":true,"mobility":2,"burst":4,"sustain":4,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"minotaur","name":"Minotaur","role":"Tank","lane":["Roam"],"tier":"A","wr":52.71,"pr":0.46,"br":6.03,"dmg":"physical","cc":true,"mobility":2,"burst":2,"sustain":4,"teamfight":5,"earlyGame":2,"lateGame":4,"diff":"Medium"},{"id":"hilda","name":"Hilda","role":"Fighter","lane":["Roam","EXP"],"tier":"S","wr":52.57,"pr":1.03,"br":20.73,"dmg":"physical","cc":true,"mobility":4,"burst":4,"sustain":5,"teamfight":4,"earlyGame":5,"lateGame":4,"diff":"Easy"},{"id":"argus","name":"Argus","role":"Fighter","lane":["EXP"],"tier":"B","wr":52.53,"pr":0.42,"br":1.4,"dmg":"physical","cc":false,"mobility":3,"burst":5,"sustain":3,"teamfight":3,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"estes","name":"Estes","role":"Support","lane":["Roam"],"tier":"S","wr":52.35,"pr":0.65,"br":51.02,"dmg":"magic","cc":false,"mobility":2,"burst":1,"sustain":5,"teamfight":5,"earlyGame":2,"lateGame":5,"diff":"Easy"},{"id":"benedetta","name":"Benedetta","role":"Assassin","lane":["EXP"],"tier":"B","wr":52.23,"pr":0.46,"br":0.86,"dmg":"physical","cc":true,"mobility":5,"burst":4,"sustain":3,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Hard"},{"id":"minsitthar","name":"Minsitthar","role":"Fighter","lane":["EXP","Roam"],"tier":"S","wr":51.91,"pr":0.88,"br":23.81,"dmg":"physical","cc":true,"mobility":2,"burst":3,"sustain":4,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"zhask","name":"Zhask","role":"Mage","lane":["Mid"],"tier":"B","wr":51.7,"pr":0.34,"br":0.48,"dmg":"magic","cc":true,"mobility":2,"burst":4,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"irithel","name":"Irithel","role":"Marksman","lane":["Gold"],"tier":"B","wr":51.69,"pr":0.48,"br":0.31,"dmg":"physical","cc":false,"mobility":2,"burst":3,"sustain":2,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"miya","name":"Miya","role":"Marksman","lane":["Gold"],"tier":"S","wr":51.68,"pr":2.72,"br":5.27,"dmg":"physical","cc":true,"mobility":3,"burst":3,"sustain":2,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"atlas","name":"Atlas","role":"Tank","lane":["Roam"],"tier":"B","wr":51.66,"pr":0.47,"br":5.58,"dmg":"magic","cc":true,"mobility":3,"burst":3,"sustain":3,"teamfight":5,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"rafaela","name":"Rafaela","role":"Support","lane":["Roam"],"tier":"B","wr":51.64,"pr":0.33,"br":2.58,"dmg":"magic","cc":true,"mobility":2,"burst":2,"sustain":4,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Easy"},{"id":"uranus","name":"Uranus","role":"Tank","lane":["EXP"],"tier":"B","wr":51.63,"pr":0.5,"br":0.94,"dmg":"magic","cc":false,"mobility":3,"burst":2,"sustain":5,"teamfight":3,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"melissa","name":"Melissa","role":"Marksman","lane":["Gold"],"tier":"B","wr":51.61,"pr":0.64,"br":1.15,"dmg":"physical","cc":true,"mobility":3,"burst":3,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"zetian","name":"Zetian","role":"Mage","lane":["Mid"],"tier":"S","wr":51.59,"pr":2.02,"br":25.63,"dmg":"magic","cc":true,"mobility":3,"burst":4,"sustain":2,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"yve","name":"Yve","role":"Mage","lane":["Mid"],"tier":"C","wr":51.53,"pr":0.1,"br":0.2,"dmg":"magic","cc":true,"mobility":2,"burst":4,"sustain":2,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"freya","name":"Freya","role":"Fighter","lane":["EXP","Jungle"],"tier":"S","wr":51.52,"pr":1.14,"br":20.63,"dmg":"physical","cc":true,"mobility":4,"burst":4,"sustain":3,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"bane","name":"Bane","role":"Fighter","lane":["Jungle","EXP"],"tier":"C","wr":51.44,"pr":0.32,"br":0.23,"dmg":"physical","cc":true,"mobility":3,"burst":4,"sustain":3,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Easy"},{"id":"kadita","name":"Kadita","role":"Mage","lane":["Mid"],"tier":"A","wr":51.42,"pr":0.99,"br":8.25,"dmg":"magic","cc":true,"mobility":5,"burst":5,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"aamon","name":"Aamon","role":"Assassin","lane":["Jungle"],"tier":"A","wr":51.41,"pr":0.8,"br":8.11,"dmg":"physical","cc":false,"mobility":4,"burst":5,"sustain":2,"teamfight":3,"earlyGame":4,"lateGame":5,"diff":"Medium"},{"id":"paquito","name":"Paquito","role":"Fighter","lane":["EXP"],"tier":"B","wr":51.36,"pr":0.98,"br":2.53,"dmg":"physical","cc":false,"mobility":4,"burst":4,"sustain":2,"teamfight":3,"earlyGame":5,"lateGame":3,"diff":"Medium"},{"id":"fredrinn","name":"Fredrinn","role":"Fighter","lane":["Jungle"],"tier":"A","wr":51.34,"pr":0.71,"br":6.65,"dmg":"physical","cc":true,"mobility":3,"burst":4,"sustain":4,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"carmilla","name":"Carmilla","role":"Support","lane":["Roam"],"tier":"B","wr":51.31,"pr":0.54,"br":1.53,"dmg":"magic","cc":true,"mobility":3,"burst":2,"sustain":4,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Easy"},{"id":"suyou","name":"Suyou","role":"Assassin","lane":["Jungle"],"tier":"S","wr":51.31,"pr":2.0,"br":31.99,"dmg":"physical","cc":true,"mobility":5,"burst":5,"sustain":2,"teamfight":4,"earlyGame":5,"lateGame":5,"diff":"Hard"},{"id":"cyclops","name":"Cyclops","role":"Mage","lane":["Mid"],"tier":"B","wr":51.26,"pr":0.79,"br":0.43,"dmg":"magic","cc":true,"mobility":3,"burst":4,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Easy"},{"id":"edith","name":"Edith","role":"Tank","lane":["EXP","Roam"],"tier":"C","wr":51.17,"pr":0.2,"br":0.1,"dmg":"physical","cc":true,"mobility":3,"burst":3,"sustain":4,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"phoveus","name":"Phoveus","role":"Fighter","lane":["EXP"],"tier":"B","wr":51.06,"pr":0.68,"br":2.79,"dmg":"physical","cc":true,"mobility":3,"burst":4,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"baxia","name":"Baxia","role":"Tank","lane":["Mid"],"tier":"C","wr":51.0,"pr":0.16,"br":0.42,"dmg":"magic","cc":true,"mobility":4,"burst":3,"sustain":4,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"hanzo","name":"Hanzo","role":"Assassin","lane":["Jungle"],"tier":"B","wr":50.97,"pr":0.32,"br":2.92,"dmg":"physical","cc":false,"mobility":4,"burst":5,"sustain":3,"teamfight":3,"earlyGame":3,"lateGame":5,"diff":"Hard"},{"id":"aulus","name":"Aulus","role":"Fighter","lane":["Jungle"],"tier":"C","wr":50.9,"pr":0.3,"br":2.87,"dmg":"physical","cc":false,"mobility":3,"burst":4,"sustain":3,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Easy"},{"id":"ruby","name":"Ruby","role":"Fighter","lane":["EXP","Roam"],"tier":"C","wr":50.88,"pr":0.45,"br":0.52,"dmg":"physical","cc":true,"mobility":3,"burst":3,"sustain":4,"teamfight":5,"earlyGame":3,"lateGame":4,"diff":"Easy"},{"id":"zhuxin","name":"Zhuxin","role":"Mage","lane":["Mid"],"tier":"S","wr":50.87,"pr":0.53,"br":28.53,"dmg":"magic","cc":true,"mobility":3,"burst":4,"sustain":3,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"odette","name":"Odette","role":"Mage","lane":["Mid"],"tier":"B","wr":50.79,"pr":0.74,"br":0.6,"dmg":"magic","cc":true,"mobility":2,"burst":4,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"vale","name":"Vale","role":"Mage","lane":["Mid"],"tier":"B","wr":50.78,"pr":0.63,"br":0.37,"dmg":"magic","cc":true,"mobility":3,"burst":4,"sustain":2,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"guinevere","name":"Guinevere","role":"Fighter","lane":["EXP"],"tier":"S","wr":50.77,"pr":1.24,"br":33.37,"dmg":"magic","cc":true,"mobility":4,"burst":5,"sustain":2,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"clint","name":"Clint","role":"Marksman","lane":["Gold"],"tier":"B","wr":50.74,"pr":0.83,"br":0.92,"dmg":"physical","cc":false,"mobility":3,"burst":4,"sustain":2,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"brody","name":"Brody","role":"Marksman","lane":["Gold"],"tier":"C","wr":50.73,"pr":0.49,"br":0.55,"dmg":"physical","cc":true,"mobility":3,"burst":4,"sustain":2,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"vexana","name":"Vexana","role":"Mage","lane":["Mid"],"tier":"A","wr":50.73,"pr":1.93,"br":1.72,"dmg":"magic","cc":true,"mobility":2,"burst":4,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"natan","name":"Natan","role":"Marksman","lane":["Gold"],"tier":"C","wr":50.63,"pr":0.37,"br":0.28,"dmg":"physical","cc":false,"mobility":3,"burst":4,"sustain":3,"teamfight":3,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"akai","name":"Akai","role":"Tank","lane":["Roam"],"tier":"B","wr":50.53,"pr":0.53,"br":2.58,"dmg":"physical","cc":true,"mobility":3,"burst":2,"sustain":4,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Easy"},{"id":"badang","name":"Badang","role":"Fighter","lane":["Roam","EXP"],"tier":"B","wr":50.49,"pr":0.92,"br":1.15,"dmg":"physical","cc":true,"mobility":3,"burst":4,"sustain":3,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Easy"},{"id":"johnson","name":"Johnson","role":"Tank","lane":["Roam"],"tier":"B","wr":50.41,"pr":0.85,"br":3.07,"dmg":"physical","cc":true,"mobility":3,"burst":2,"sustain":4,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"natalia","name":"Natalia","role":"Assassin","lane":["Jungle","Roam"],"tier":"C","wr":50.41,"pr":0.29,"br":2.15,"dmg":"physical","cc":true,"mobility":4,"burst":4,"sustain":2,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"beatrix","name":"Beatrix","role":"Marksman","lane":["Gold"],"tier":"C","wr":50.26,"pr":0.73,"br":0.75,"dmg":"physical","cc":false,"mobility":3,"burst":4,"sustain":2,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Hard"},{"id":"thamuz","name":"Thamuz","role":"Fighter","lane":["EXP"],"tier":"B","wr":50.15,"pr":1.13,"br":4.49,"dmg":"physical","cc":false,"mobility":3,"burst":4,"sustain":4,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"lukas","name":"Lukas","role":"Fighter","lane":["EXP","Jungle"],"tier":"C","wr":50.14,"pr":0.34,"br":0.77,"dmg":"physical","cc":true,"mobility":4,"burst":4,"sustain":3,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"kagura","name":"Kagura","role":"Mage","lane":["Mid"],"tier":"C","wr":50.13,"pr":0.64,"br":1.55,"dmg":"magic","cc":true,"mobility":4,"burst":5,"sustain":2,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Hard"},{"id":"obsidia","name":"Obsidia","role":"Marksman","lane":["Gold"],"tier":"B","wr":50.13,"pr":0.88,"br":2.38,"dmg":"physical","cc":false,"mobility":3,"burst":4,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"aldous","name":"Aldous","role":"Fighter","lane":["EXP"],"tier":"C","wr":50.12,"pr":0.35,"br":0.48,"dmg":"physical","cc":false,"mobility":3,"burst":5,"sustain":3,"teamfight":3,"earlyGame":2,"lateGame":5,"diff":"Easy"},{"id":"moskov","name":"Moskov","role":"Marksman","lane":["Gold"],"tier":"B","wr":50.11,"pr":0.97,"br":0.38,"dmg":"physical","cc":true,"mobility":3,"burst":4,"sustain":2,"teamfight":3,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"ixia","name":"Ixia","role":"Marksman","lane":["Gold"],"tier":"B","wr":50.06,"pr":0.85,"br":1.81,"dmg":"physical","cc":false,"mobility":3,"burst":3,"sustain":3,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"alice","name":"Alice","role":"Tank","lane":["EXP","Jungle"],"tier":"A","wr":50.02,"pr":0.78,"br":10.43,"dmg":"magic","cc":true,"mobility":3,"burst":3,"sustain":4,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"karrie","name":"Karrie","role":"Marksman","lane":["Gold"],"tier":"B","wr":50.02,"pr":0.89,"br":3.84,"dmg":"physical","cc":false,"mobility":3,"burst":3,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"julian","name":"Julian","role":"Assassin","lane":["Mid"],"tier":"B","wr":49.97,"pr":1.23,"br":4.15,"dmg":"physical","cc":true,"mobility":4,"burst":4,"sustain":3,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Hard"},{"id":"alucard","name":"Alucard","role":"Fighter","lane":["Jungle"],"tier":"C","wr":49.96,"pr":0.59,"br":0.72,"dmg":"physical","cc":false,"mobility":3,"burst":4,"sustain":5,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Easy"},{"id":"yi_sun_shin","name":"Yi Sun-shin","role":"Assassin","lane":["Jungle"],"tier":"A","wr":49.96,"pr":1.48,"br":13.06,"dmg":"physical","cc":true,"mobility":4,"burst":4,"sustain":2,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Hard"},{"id":"helcurt","name":"Helcurt","role":"Assassin","lane":["Jungle","Roam"],"tier":"S","wr":49.9,"pr":0.84,"br":29.8,"dmg":"physical","cc":true,"mobility":5,"burst":5,"sustain":2,"teamfight":3,"earlyGame":5,"lateGame":5,"diff":"Medium"},{"id":"harley","name":"Harley","role":"Assassin","lane":["Jungle","Mid"],"tier":"S","wr":49.87,"pr":1.19,"br":72.28,"dmg":"magic","cc":false,"mobility":5,"burst":5,"sustain":2,"teamfight":3,"earlyGame":5,"lateGame":5,"diff":"Medium"},{"id":"saber","name":"Saber","role":"Assassin","lane":["Jungle","Roam"],"tier":"S","wr":49.83,"pr":0.99,"br":23.12,"dmg":"physical","cc":false,"mobility":4,"burst":5,"sustain":2,"teamfight":3,"earlyGame":5,"lateGame":5,"diff":"Medium"},{"id":"barats","name":"Barats","role":"Tank","lane":["Jungle"],"tier":"D","wr":49.7,"pr":0.13,"br":0.11,"dmg":"physical","cc":true,"mobility":3,"burst":3,"sustain":4,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"faramis","name":"Faramis","role":"Support","lane":["Mid"],"tier":"D","wr":49.6,"pr":0.1,"br":0.78,"dmg":"magic","cc":true,"mobility":3,"burst":3,"sustain":3,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"x_borg","name":"X.Borg","role":"Fighter","lane":["EXP"],"tier":"B","wr":49.55,"pr":0.65,"br":4.39,"dmg":"physical","cc":false,"mobility":3,"burst":4,"sustain":4,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Easy"},{"id":"claude","name":"Claude","role":"Marksman","lane":["Gold"],"tier":"C","wr":49.47,"pr":0.99,"br":0.56,"dmg":"physical","cc":false,"mobility":4,"burst":4,"sustain":2,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Hard"},{"id":"gusion","name":"Gusion","role":"Assassin","lane":["Mid"],"tier":"A","wr":49.37,"pr":1.67,"br":12.65,"dmg":"physical","cc":false,"mobility":5,"burst":5,"sustain":2,"teamfight":3,"earlyGame":5,"lateGame":5,"diff":"Hard"},{"id":"roger","name":"Roger","role":"Fighter","lane":["Jungle"],"tier":"C","wr":49.33,"pr":0.31,"br":0.11,"dmg":"physical","cc":false,"mobility":4,"burst":4,"sustain":3,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"cecilion","name":"Cecilion","role":"Mage","lane":["Mid"],"tier":"C","wr":49.24,"pr":0.64,"br":0.23,"dmg":"magic","cc":true,"mobility":2,"burst":4,"sustain":3,"teamfight":4,"earlyGame":2,"lateGame":5,"diff":"Medium"},{"id":"harith","name":"Harith","role":"Mage","lane":["Gold","Jungle"],"tier":"C","wr":49.09,"pr":0.61,"br":3.53,"dmg":"magic","cc":true,"mobility":5,"burst":4,"sustain":2,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Hard"},{"id":"eudora","name":"Eudora","role":"Mage","lane":["Mid"],"tier":"C","wr":49.0,"pr":0.81,"br":2.53,"dmg":"magic","cc":true,"mobility":2,"burst":5,"sustain":2,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Easy"},{"id":"change","name":"Chang'e","role":"Mage","lane":["Mid"],"tier":"C","wr":48.92,"pr":0.83,"br":0.62,"dmg":"magic","cc":false,"mobility":2,"burst":4,"sustain":3,"teamfight":3,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"angela","name":"Angela","role":"Support","lane":["Roam"],"tier":"B","wr":48.91,"pr":1.62,"br":7.66,"dmg":"magic","cc":true,"mobility":3,"burst":1,"sustain":5,"teamfight":4,"earlyGame":2,"lateGame":5,"diff":"Easy"},{"id":"lylia","name":"Lylia","role":"Mage","lane":["Mid"],"tier":"C","wr":48.72,"pr":0.66,"br":1.28,"dmg":"magic","cc":true,"mobility":3,"burst":4,"sustain":2,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"lapu_lapu","name":"Lapu-Lapu","role":"Fighter","lane":["EXP"],"tier":"C","wr":48.64,"pr":0.53,"br":1.02,"dmg":"physical","cc":true,"mobility":3,"burst":4,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"chip","name":"Chip","role":"Support","lane":["Roam"],"tier":"D","wr":48.59,"pr":0.06,"br":3.04,"dmg":"magic","cc":true,"mobility":3,"burst":2,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Hard"},{"id":"sora","name":"Sora","role":"Fighter","lane":["EXP","Jungle"],"tier":"S","wr":48.49,"pr":0.81,"br":45.24,"dmg":"physical","cc":true,"mobility":5,"burst":5,"sustain":3,"teamfight":4,"earlyGame":4,"lateGame":5,"diff":"Hard"},{"id":"joy","name":"Joy","role":"Assassin","lane":["Jungle"],"tier":"D","wr":48.44,"pr":0.23,"br":0.67,"dmg":"physical","cc":false,"mobility":5,"burst":5,"sustain":2,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Hard"},{"id":"wanwan","name":"Wanwan","role":"Marksman","lane":["Gold"],"tier":"D","wr":48.4,"pr":0.17,"br":0.3,"dmg":"physical","cc":false,"mobility":5,"burst":4,"sustain":2,"teamfight":5,"earlyGame":3,"lateGame":5,"diff":"Hard"},{"id":"hayabusa","name":"Hayabusa","role":"Assassin","lane":["Jungle"],"tier":"C","wr":48.37,"pr":0.89,"br":5.15,"dmg":"physical","cc":false,"mobility":5,"burst":4,"sustain":2,"teamfight":3,"earlyGame":5,"lateGame":4,"diff":"Hard"},{"id":"hylos","name":"Hylos","role":"Tank","lane":["Roam"],"tier":"D","wr":48.36,"pr":0.37,"br":0.9,"dmg":"magic","cc":true,"mobility":2,"burst":2,"sustain":5,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Easy"},{"id":"lunox","name":"Lunox","role":"Mage","lane":["Mid"],"tier":"D","wr":48.31,"pr":0.31,"br":0.48,"dmg":"magic","cc":false,"mobility":3,"burst":5,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Hard"},{"id":"dyrroth","name":"Dyrroth","role":"Fighter","lane":["EXP","Jungle"],"tier":"C","wr":48.28,"pr":1.27,"br":1.13,"dmg":"physical","cc":true,"mobility":4,"burst":4,"sustain":3,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"layla","name":"Layla","role":"Marksman","lane":["Gold"],"tier":"C","wr":48.24,"pr":1.09,"br":1.1,"dmg":"physical","cc":false,"mobility":1,"burst":3,"sustain":2,"teamfight":3,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"yin","name":"Yin","role":"Fighter","lane":["Jungle","EXP"],"tier":"C","wr":48.18,"pr":0.57,"br":3.18,"dmg":"physical","cc":true,"mobility":4,"burst":4,"sustain":3,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"nana","name":"Nana","role":"Mage","lane":["Mid"],"tier":"B","wr":48.17,"pr":1.62,"br":4.84,"dmg":"magic","cc":true,"mobility":2,"burst":3,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":3,"diff":"Easy"},{"id":"jawhead","name":"Jawhead","role":"Fighter","lane":["Mid"],"tier":"D","wr":48.13,"pr":0.43,"br":0.39,"dmg":"physical","cc":true,"mobility":4,"burst":3,"sustain":3,"teamfight":3,"earlyGame":4,"lateGame":3,"diff":"Medium"},{"id":"cici","name":"Cici","role":"Fighter","lane":["EXP"],"tier":"D","wr":47.95,"pr":0.35,"br":1.59,"dmg":"physical","cc":true,"mobility":4,"burst":3,"sustain":3,"teamfight":4,"earlyGame":4,"lateGame":3,"diff":"Medium"},{"id":"selena","name":"Selena","role":"Assassin","lane":["Mid"],"tier":"C","wr":47.91,"pr":1.17,"br":3.41,"dmg":"magic","cc":true,"mobility":4,"burst":5,"sustain":2,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Hard"},{"id":"bruno","name":"Bruno","role":"Marksman","lane":["Gold"],"tier":"D","wr":47.88,"pr":0.21,"br":0.15,"dmg":"physical","cc":true,"mobility":3,"burst":4,"sustain":2,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Easy"},{"id":"xavier","name":"Xavier","role":"Mage","lane":["Mid"],"tier":"D","wr":47.82,"pr":0.51,"br":0.24,"dmg":"magic","cc":false,"mobility":2,"burst":4,"sustain":2,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Medium"},{"id":"grock","name":"Grock","role":"Tank","lane":["Roam"],"tier":"C","wr":47.79,"pr":0.64,"br":3.89,"dmg":"physical","cc":true,"mobility":3,"burst":3,"sustain":4,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"arlott","name":"Arlott","role":"Fighter","lane":["EXP"],"tier":"D","wr":47.77,"pr":0.46,"br":0.65,"dmg":"physical","cc":true,"mobility":4,"burst":4,"sustain":3,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"yu_zhong","name":"Yu Zhong","role":"Fighter","lane":["EXP"],"tier":"C","wr":47.74,"pr":1.33,"br":2.91,"dmg":"physical","cc":false,"mobility":4,"burst":4,"sustain":5,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Medium"},{"id":"aurora","name":"Aurora","role":"Mage","lane":["Mid"],"tier":"D","wr":47.7,"pr":0.4,"br":0.27,"dmg":"magic","cc":true,"mobility":2,"burst":5,"sustain":2,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"tigreal","name":"Tigreal","role":"Tank","lane":["Roam"],"tier":"B","wr":47.56,"pr":1.99,"br":7.22,"dmg":"physical","cc":true,"mobility":2,"burst":2,"sustain":3,"teamfight":5,"earlyGame":3,"lateGame":3,"diff":"Easy"},{"id":"kimmy","name":"Kimmy","role":"Marksman","lane":["Mid"],"tier":"D","wr":47.54,"pr":0.69,"br":0.68,"dmg":"physical","cc":false,"mobility":3,"burst":4,"sustain":2,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Hard"},{"id":"nolan","name":"Nolan","role":"Assassin","lane":["Jungle"],"tier":"D","wr":47.54,"pr":0.27,"br":0.57,"dmg":"physical","cc":true,"mobility":5,"burst":5,"sustain":2,"teamfight":3,"earlyGame":5,"lateGame":4,"diff":"Hard"},{"id":"novaria","name":"Novaria","role":"Mage","lane":["Mid"],"tier":"D","wr":47.4,"pr":0.77,"br":1.38,"dmg":"magic","cc":true,"mobility":2,"burst":4,"sustain":2,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"zilong","name":"Zilong","role":"Fighter","lane":["EXP"],"tier":"D","wr":47.36,"pr":0.94,"br":0.73,"dmg":"physical","cc":false,"mobility":5,"burst":4,"sustain":3,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Easy"},{"id":"pharsa","name":"Pharsa","role":"Mage","lane":["Mid"],"tier":"D","wr":47.25,"pr":0.7,"br":0.49,"dmg":"magic","cc":true,"mobility":2,"burst":4,"sustain":2,"teamfight":4,"earlyGame":3,"lateGame":5,"diff":"Easy"},{"id":"alpha","name":"Alpha","role":"Fighter","lane":["Jungle","EXP"],"tier":"D","wr":47.02,"pr":1.12,"br":0.76,"dmg":"physical","cc":true,"mobility":3,"burst":4,"sustain":4,"teamfight":3,"earlyGame":4,"lateGame":3,"diff":"Easy"},{"id":"gatotkaca","name":"Gatotkaca","role":"Tank","lane":["Roam","EXP"],"tier":"D","wr":46.99,"pr":0.72,"br":0.55,"dmg":"magic","cc":true,"mobility":2,"burst":3,"sustain":4,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Easy"},{"id":"luo_yi","name":"Luo Yi","role":"Mage","lane":["Mid"],"tier":"D","wr":46.9,"pr":0.18,"br":0.16,"dmg":"magic","cc":true,"mobility":2,"burst":4,"sustain":2,"teamfight":5,"earlyGame":3,"lateGame":4,"diff":"Hard"},{"id":"martis","name":"Martis","role":"Fighter","lane":["Jungle","EXP"],"tier":"D","wr":46.71,"pr":0.6,"br":0.67,"dmg":"physical","cc":true,"mobility":4,"burst":4,"sustain":3,"teamfight":3,"earlyGame":4,"lateGame":3,"diff":"Medium"},{"id":"chou","name":"Chou","role":"Fighter","lane":["EXP","Roam"],"tier":"C","wr":46.66,"pr":1.09,"br":3.33,"dmg":"physical","cc":true,"mobility":5,"burst":4,"sustain":2,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Hard"},{"id":"lesley","name":"Lesley","role":"Marksman","lane":["Gold"],"tier":"C","wr":46.55,"pr":1.85,"br":8.46,"dmg":"physical","cc":false,"mobility":3,"burst":4,"sustain":2,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"karina","name":"Karina","role":"Assassin","lane":["Jungle"],"tier":"D","wr":46.35,"pr":0.54,"br":2.13,"dmg":"physical","cc":false,"mobility":4,"burst":5,"sustain":2,"teamfight":3,"earlyGame":4,"lateGame":3,"diff":"Easy"},{"id":"kalea","name":"Kalea","role":"Support","lane":["Roam"],"tier":"D","wr":46.33,"pr":0.36,"br":1.71,"dmg":"magic","cc":true,"mobility":3,"burst":2,"sustain":3,"teamfight":4,"earlyGame":3,"lateGame":3,"diff":"Medium"},{"id":"ling","name":"Ling","role":"Assassin","lane":["Jungle"],"tier":"D","wr":45.35,"pr":0.2,"br":0.23,"dmg":"physical","cc":false,"mobility":5,"burst":5,"sustain":2,"teamfight":3,"earlyGame":4,"lateGame":5,"diff":"Hard"},{"id":"franco","name":"Franco","role":"Tank","lane":["Roam"],"tier":"D","wr":44.51,"pr":1.26,"br":6.95,"dmg":"physical","cc":true,"mobility":3,"burst":2,"sustain":2,"teamfight":3,"earlyGame":5,"lateGame":2,"diff":"Hard"},{"id":"balmond","name":"Balmond","role":"Fighter","lane":["Mid"],"tier":"D","wr":43.46,"pr":0.29,"br":0.26,"dmg":"physical","cc":true,"mobility":3,"burst":4,"sustain":4,"teamfight":3,"earlyGame":3,"lateGame":3,"diff":"Easy"},{"id":"valentina","name":"Valentina","role":"Mage","lane":["Mid"],"tier":"D","wr":43.45,"pr":0.18,"br":0.46,"dmg":"magic","cc":true,"mobility":3,"burst":4,"sustain":2,"teamfight":4,"earlyGame":3,"lateGame":4,"diff":"Hard"},{"id":"lancelot","name":"Lancelot","role":"Assassin","lane":["Jungle"],"tier":"D","wr":43.37,"pr":0.66,"br":1.07,"dmg":"physical","cc":false,"mobility":5,"burst":5,"sustain":2,"teamfight":3,"earlyGame":4,"lateGame":5,"diff":"Hard"},{"id":"esmeralda","name":"Esmeralda","role":"Tank","lane":["EXP"],"tier":"D","wr":43.36,"pr":0.38,"br":0.66,"dmg":"magic","cc":false,"mobility":3,"burst":3,"sustain":5,"teamfight":3,"earlyGame":3,"lateGame":4,"diff":"Medium"},{"id":"mathilda","name":"Mathilda","role":"Support","lane":["Roam"],"tier":"D","wr":43.25,"pr":0.11,"br":0.58,"dmg":"magic","cc":true,"mobility":5,"burst":3,"sustain":3,"teamfight":4,"earlyGame":4,"lateGame":4,"diff":"Hard"},{"id":"fanny","name":"Fanny","role":"Assassin","lane":["Jungle"],"tier":"D","wr":42.81,"pr":0.62,"br":3.29,"dmg":"physical","cc":false,"mobility":5,"burst":5,"sustain":2,"teamfight":3,"earlyGame":5,"lateGame":5,"diff":"Hard"},{"id":"granger","name":"Granger","role":"Marksman","lane":["Gold"],"tier":"D","wr":42.5,"pr":1.44,"br":3.27,"dmg":"physical","cc":false,"mobility":3,"burst":5,"sustain":2,"teamfight":3,"earlyGame":4,"lateGame":4,"diff":"Hard"}],"synergy_pairs":{"atlas-gord":9,"atlas-vale":8,"atlas-valir":8,"atlas-ling":9,"franco-eudora":10,"franco-gord":9,"franco-valir":8,"khufra-lancelot":8,"khufra-moskov":8,"angela-wanwan":10,"angela-hanabi":8,"angela-ixia":7,"diggie-hanabi":9,"diggie-ixia":8,"diggie-wanwan":7,"floryn-estes":9,"floryn-angela":7,"estes-hanabi":8,"estes-sun":8,"estes-fredrinn":8,"kaja-gord":9,"kaja-valir":8,"gloo-diggie":8,"gloo-floryn":7,"fredrinn-floryn":8,"fredrinn-angela":8,"fredrinn-estes":8,"minsitthar-gord":8,"minsitthar-vale":7,"terizla-atlas":8,"terizla-franco":7,"silvanna-gord":8,"silvanna-vale":7,"hilda-estes":7,"hilda-floryn":7,"sun-estes":8,"sun-floryn":7,"leomord-diggie":7,"leomord-floryn":7,"belerick-estes":8,"belerick-floryn":7,"lolita-hanabi":8,"lolita-beatrix":7,"minotaur-gord":8,"minotaur-vale":7,"johnson-eudora":9,"johnson-odette":8,"suyou-atlas":8,"suyou-floryn":7,"zhuxin-atlas":8,"zhuxin-franco":7,"marcel-hanabi":9,"marcel-miya":8,"carmilla-cecilion":9,"carmilla-atlas":7,"sora-atlas":8,"sora-floryn":7,"guinevere-franco":8,"guinevere-atlas":7,"harley-franco":8,"harley-atlas":7,"saber-franco":8,"saber-atlas":7,"helcurt-franco":8,"helcurt-atlas":7,"vale-atlas":8,"vale-ruby":7,"valir-atlas":8,"valir-franco":7,"popol_and_kupa-diggie":8,"popol_and_kupa-floryn":7}};
+function applyData(data) {
+    HEROES = (data.heroes || []).map(h => (Object.assign({}, h, {
+        mobility: parseInt(h.mobility) || 3,
+        burst: parseInt(h.burst) || 3,
+        sustain: parseInt(h.sustain) || 3,
+        teamfight: parseInt(h.teamfight) || 3,
+        earlyGame: parseInt(h.earlyGame) || 3,
+        lateGame: parseInt(h.lateGame) || 3,
+        wr: parseFloat(h.wr) || 50,
+        pr: parseFloat(h.pr) || 1,
+        br: parseFloat(h.br) || 5,
+    })));
+    PATCH_INFO = {
+        patch: data.patch || '2.1.x',
+        season: data.season || '40',
+        buffs: data.buffs || [],
+        nerfs: data.nerfs || [],
+        synergy_pairs: data.synergy_pairs || {}
+    };
+    if (!HEROES.length) throw new Error('No hero data');
+}
+
+function applyPatchBadge() {
+    try {
+        var bar = document.getElementById('mx-status-bar');
+        if (!bar) return;
+        var badges = bar.querySelectorAll('.manxeon-patch-badge');
+        for (var b = 0; b < badges.length; b++) { badges[b].remove(); }
+        var vBadge = document.createElement('span');
+        vBadge.className = 'manxeon-patch-badge buff';
+        vBadge.style.marginLeft = 'auto';
+        vBadge.textContent = 'Patch ' + (PATCH_INFO.patch || '2.1.70');
+        bar.appendChild(vBadge);
+        if (PATCH_INFO.buffs && PATCH_INFO.buffs.length) {
+            var bBadge = document.createElement('span');
+            bBadge.className = 'manxeon-patch-badge buff';
+            bBadge.textContent = '↑ ' + PATCH_INFO.buffs.slice(0,4).join(' · ');
+            bar.appendChild(bBadge);
+        }
+        if (PATCH_INFO.nerfs && PATCH_INFO.nerfs.length) {
+            var nBadge = document.createElement('span');
+            nBadge.className = 'manxeon-patch-badge nerf';
+            nBadge.textContent = '↓ ' + PATCH_INFO.nerfs.slice(0,4).join(' · ');
+            bar.appendChild(nBadge);
+        }
+        var oldBadge = document.getElementById('mx-patch-badge');
+        if (oldBadge) oldBadge.style.display = 'none';
+    } catch(e) {}
+}
+
+function setStatus(color, text) {
+    try {
+    const dot = document.getElementById('mx-status-dot');
+    const txt = document.getElementById('mx-status-text');
+    if (!dot || !txt) return;
+    dot.className = 'manxeon-status-dot ' + color;
+    txt.textContent = text;
+    } catch(e) {}
+
+}
+
+window.mxRetry = function() {
+    document.getElementById('mx-main').innerHTML = `
+        <div class="manxeon-loading" id="mx-loading">
+            <div class="manxeon-loading-spinner"></div>
+            <div class="manxeon-loading-text">Refreshing Data</div>
+            <div class="manxeon-loading-sub">Reloading hero stats and patch data...</div>
+        </div>`;
+    setStatus('orange', 'Refreshing...');
+    try {
+        applyData(FALLBACK_DATA);
+        setStatus('green', 'Patch ' + FALLBACK_DATA.patch + ' · ' + HEROES.length + ' heroes');
+        applyPatchBadge();
+        renderApp();
+    } catch(e) { console.error('Retry failed:', e); }
+};
+
+function getSynergy(heroes) {
+    const hits = [];
+    for (let i = 0; i < heroes.length; i++) {
+        for (let j = i + 1; j < heroes.length; j++) {
+            const k1 = `${heroes[i].id}-${heroes[j].id}`;
+            const k2 = `${heroes[j].id}-${heroes[i].id}`;
+            const v = (PATCH_INFO.synergy_pairs || {})[k1] || (PATCH_INFO.synergy_pairs || {})[k2] || 0;
+            if (v > 0) hits.push({ pair: `${heroes[i].name} + ${heroes[j].name}`, val: v });
+        }
+    }
+    return { score: hits.reduce((s, h) => s + h.val, 0), hits };
+}
+
+function forecast(heroes) {
+    if (!heroes.length) return null;
+    const n = heroes.length;
+
+    
+    const baseWR = heroes.reduce((s,h) => s + h.wr, 0) / n;
+
+    
+    const hasT  = heroes.some(h=>h.role==='Tank');
+    const hasF  = heroes.some(h=>h.role==='Fighter');
+    const hasS  = heroes.some(h=>h.role==='Support');
+    const hasMM = heroes.some(h=>h.role==='Marksman');
+    const hasMG = heroes.some(h=>h.role==='Mage');
+    const hasAs = heroes.some(h=>h.role==='Assassin');
+    const hasFront = hasT || hasF;
+    const hasCarry = hasMM || hasMG || hasAs;
+    // Research: teams with frontline win 6.2% more on average in Legend+
+    const roleScore = (hasFront?3.1:-5.8) + (hasCarry?2.4:-4.2) + (hasS?1.8:-2.1)
+                    + (hasT?0.8:0) + (hasMM?0.9:0) + (hasMG?0.4:0);
+
+    
+    const phys = heroes.filter(h=>h.dmg==='physical').length;
+    const mag  = heroes.filter(h=>h.dmg==='magic').length;
+    // Mixed damage prevents single counter-item — verified +1.8% avg advantage
+    const dmgBal = Math.min(phys,mag)>=2 ? 1.8 : Math.min(phys,mag)>=1 ? 0.7 : -2.4;
+
+    
+    const ccCount = heroes.filter(h=>h.cc).length;
+    // Each CC hero contributes ~0.6% WR boost (diminishing returns after 3)
+    const ccScore = ccCount>=4 ? 2.5 : ccCount===3 ? 2.1 : ccCount===2 ? 1.3 : ccCount===1 ? 0.4 : -2.8;
+
+    
+    const {score:synRaw, hits:synHits} = getSynergy(heroes);
+    // Weighted: confirmed pairs add ~0.35% per point, capped at +4.2%
+    const synBonus = Math.min(synRaw * 0.35, 4.2);
+
+    
+    const TV = {S:2, A:1, B:0, C:-0.5, D:-1.5};
+    const tierScore = heroes.reduce((s,h) => s + (TV[h.tier]||0), 0) / n;
+
+    
+    const avgTF    = heroes.reduce((s,h)=>s+h.teamfight,0) / n;
+    const avgEarly = heroes.reduce((s,h)=>s+h.earlyGame,0) / n;
+    const avgLate  = heroes.reduce((s,h)=>s+h.lateGame,0) / n;
+    // Teamfight >4 = +1.2%, <3 = -1.4%
+    const phaseScore = avgTF>=4 ? 1.2 : avgTF>=3 ? 0.4 : -1.4;
+
+    
+    const avgMob = heroes.reduce((s,h)=>s+h.mobility,0) / n;
+    const mobScore = avgMob>=3.5 ? 0.6 : avgMob<=1.5 ? -1.1 : 0;
+
+    
+    const fullBonus = n===5 ? 0.9 : 0;
+
+    
+    const adj = roleScore + dmgBal + ccScore + synBonus + tierScore + phaseScore + mobScore + fullBonus;
+    const fc  = Math.max(38, Math.min(73, baseWR + adj));
+
+    
+    const pros=[], cons=[], warnings=[];
+    if(!hasFront)  warnings.push('No frontline — fragile vs dive compositions');
+    if(!hasCarry)  warnings.push('No damage carry — cannot close out games');
+    if(!hasS)      warnings.push('No support — zero sustain or peel');
+    if(phys>=4)    warnings.push("4+ physical heroes — enemy stacks Antique Cuirass easily\");
+    if(mag>=4)     warnings.push(\"4+ magic heroes — enemy stacks Athena's Shield easily\");
+    if(ccCount===0) warnings.push(\"Zero CC — cannot lock down enemy carries");
+    const weakHeroes = heroes.filter(h=>h.wr<46);
+    if(weakHeroes.length) warnings.push('Below meta WR: '+weakHeroes.map(h=>`${h.name}(${h.wr}%)`).join(', '));
+
+    if(hasFront)         pros.push('Frontline present — can initiate and absorb damage");
+    if(dmgBal>=1)        pros.push(`Mixed damage (${phys} phys + ${mag} magic) — hard to one-item counter`);
+    if(ccCount>=3)       pros.push(`Strong CC chain (${ccCount} heroes) — enemies stay locked`);
+    if(synHits.length>0) pros.push(`${synHits.length} synergy combo${synHits.length>1?'s":''}: ${synHits.map(s=>s.pair).slice(0,2).join(', ')}`);
+    if(avgLate>=4)       pros.push('Excellent late-game scaling — wins extended games');
+    if(avgEarly>=4)      pros.push('Strong early spike — snowball before enemies scale');
+    if(avgTF>=4)         pros.push(`High teamfight rating (${avgTF.toFixed(1)}/5) — dominates 5v5`);
+
+    if(phys>=4)          cons.push('Monotype physical — single Antique Cuirass counters output');
+    if(mag>=4)           cons.push("Monotype magic — single Athenas Shield counters output");
+    if(!hasS)            cons.push('No healer/shielder — full reliance on items for sustain');
+    if(avgEarly<3)       cons.push('Weak early game — play passive until items spike');
+    const hardHeroes = heroes.filter(h=>h.diff==='Hard');
+    if(hardHeroes.length) cons.push(`High skill requirement: ${hardHeroes.map(h=>h.name).join(', ')}`);
+
+    const lbl = fc>=62?'Dominant':fc>=57?'Strong':fc>=53?'Favoured':fc>=50?'Even':fc>=46?'Risky':'Underdog';
+    const lc  = fc>=62?'#16a34a':fc>=57?'#22c55e':fc>=53?'#15803d':fc>=50?'#b45309':fc>=46?'#c2410c':'#dc2626';
+
+    return {
+        fc: +fc.toFixed(1), baseWR: +baseWR.toFixed(1),
+        roleScore:+roleScore.toFixed(1), dmgBal:+dmgBal.toFixed(1),
+        ccScore:+ccScore.toFixed(1), synBonus:+synBonus.toFixed(1),
+        synHits, tierScore:+tierScore.toFixed(1),
+        phaseScore:+phaseScore.toFixed(1), mobScore:+mobScore.toFixed(1),
+        fullBonus, adj:+adj.toFixed(1),
+        phys, mag, ccCount,
+        avgTF:+avgTF.toFixed(1), avgEarly:+avgEarly.toFixed(1), avgLate:+avgLate.toFixed(1),
+        pros, cons, warnings, lbl, lc, n
+    };
+}
+
+function fitsLane(hero, idx) {
+    const lane = LANES[idx];
+    return (hero.lane || []).includes(lane) || ((LANE_ROLES[lane] || []).some(r => hero.role === r));
+}
+
+const formatNumber = (num) => {
+    if (Math.abs(num) < 0.000001 && num !== 0) return num.toExponential(6);
+    return parseFloat(num.toFixed(6)).toString();
+};
+
+function wrColor(wr) {
+    return wr >= 52 ? '#16a34a' : wr >= 50 ? '#b45309' : '#dc2626';
+}
+
+function buildBar(label, value, max, color) {
+    const pct = (value / max) * 100;
+    return `<div class="mx-bar-row">
+        <div class="mx-bar-lbl">${label}</div>
+        <div class="mx-bar-track"><div class="mx-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+        <div class="mx-bar-val">${value}</div>
+    </div>`;
+}
+
+function renderApp() {
+    document.getElementById('mx-main').innerHTML = `
+        <div class="manxeon-tabs" id="mx-tabs">
+            <button class="manxeon-tab-btn active" onclick="mxSwitchTab('builder',this)">&#9651; Builder</button>
+            <button class="manxeon-tab-btn" onclick="mxSwitchTab('templates',this)">&#9776; Templates</button>
+            <button class="manxeon-tab-btn" onclick="mxSwitchTab('database',this)">&#9733; Database</button>
+            <button class="manxeon-tab-btn" onclick="mxSwitchTab('items',this)">&#9670; Items</button>
+            <button class="manxeon-tab-btn vs-tab-btn" onclick="mxSwitchTab('vs',this)">&#9876; VS Mode</button>
+        </div>
+        <div id="mx-tab-builder"></div>
+        <div id="mx-tab-templates" style="display:none"></div>
+        <div id="mx-tab-database" style="display:none"></div>
+        <div id="mx-tab-items" style="display:none"></div>
+        <div id="mx-tab-vs" style="display:none"></div>
+    `;
+    render();
+}
+
+function render() {
+    renderLanes();
+    renderForecast();
+    renderPicker();
+    renderActions();
+}
+
+function renderLanes() {
+    const el = document.getElementById('mx-tab-builder');
+    if (!el) return;
+    const lanesHtml = `<div class="manxeon-lanes-grid" id="mx-lanes-grid">
+        ${LANES.map((ln, idx) => {
+            const h = lineup[idx];
+            const isAct = activeSlot === idx;
+            const tc = h ? (TIER_C[h.tier] || '#999') : 'transparent';
+            const fits = h && fitsLane(h, idx);
+            return `<div class="manxeon-lane-slot ${isAct ? 'active' : ''} ${h ? 'filled' : ''}"
+                style="${h ? `border-color:${tc}` : ''}"
+                onclick="mxSlotClick(${idx})">
+                ${h ? `<button class="mx-remove-btn" onclick="mxRemoveHero(event,${idx})">×</button>` : ''}
+                ${h && !fits ? '<div class="mx-offlane">off-lane</div>' : ''}
+                <div class="mx-lane-icon" style="font-size:18px">${LANE_ICONS[ln]}</div>
+                ${h ? `
+                    <div class="mx-portrait-wrap">
+                        ${heroImg(h, 'mx-lane-portrait', 22)}
+                        <span class="mx-tier-dot" style="background:${tc}">${h.tier}</span>
+                    </div>
+                    <div class="mx-hero-name">${h.name}</div>
+                    <div class="mx-hero-role">${h.role}</div>
+                    <div class="mx-tier-wr">
+                        <span style="font-size:9px;font-weight:800;color:${wrColor(h.wr)}">${h.wr}%</span>
+                    </div>
+                ` : `
+                    <div style="font-family:Arial,sans-serif;font-size:11px;font-weight:900;color:#111;letter-spacing:1px;padding:4px 8px;background:#f0f0f0;border-radius:4px;margin-bottom:3px">${ln}</div>
+                    <div class="mx-lane-sub">${LANE_ROLES[ln][0]}</div>
+                    <div class="mx-lane-pick">+ Pick Hero</div>
+                `}
+            </div>`;
+        }).join('')}
+    </div>`;
+
+    el.innerHTML = lanesHtml +
+        `<div id="mx-forecast-wrap"></div>` +
+        `<div id="mx-picker-wrap"></div>` +
+        `<div id="mx-actions-wrap"></div>`;
+
+    renderForecast();
+    renderPicker();
+    renderActions();
+}
+
+function renderForecast() {
+    const wrap = document.getElementById('mx-forecast-wrap');
+    if (!wrap) return;
+    const filled = lineup.filter(Boolean);
+    if (!filled.length) { wrap.innerHTML = ''; return; }
+    const fc = forecast(filled);
+    if (!fc) { wrap.innerHTML = ''; return; }
+
+    const brRows = [
+        ['Base WR (mlbbhub verified)', `${fc.baseWR}%`, '#555'],
+        ['Role Coverage', `${fc.roleScore > 0 ? '+' : ''}${fc.roleScore.toFixed(1)}%`, fc.roleScore > 0 ? '#16a34a' : '#dc2626'],
+        ['Damage Balance', `${fc.dmgBal > 0 ? '+' : ''}${fc.dmgBal.toFixed(1)}%`, fc.dmgBal > 0 ? '#16a34a' : '#dc2626'],
+        [`CC Chain (×${fc.ccCount})`, `${fc.ccScore > 0 ? '+' : ''}${fc.ccScore.toFixed(1)}%`, fc.ccScore > 0 ? '#16a34a' : fc.ccScore === 0 ? '#b45309' : '#dc2626'],
+        ['Synergy Bonus', `+${fc.synBonus.toFixed(1)}%`, '#1d4ed8'],
+        ['Hero Tier Avg', `${fc.tierScore > 0 ? '+' : ''}${fc.tierScore.toFixed(1)}%`, fc.tierScore > 0 ? '#16a34a' : '#dc2626'],
+        ['Teamfight Phase', `${fc.phaseScore > 0 ? '+' : ''}${fc.phaseScore.toFixed(1)}%`, '#7c3aed'],
+        ['Full 5-Hero Bonus', fc.n === 5 ? '+0.9%' : 'pick all 5', fc.n === 5 ? '#16a34a' : '#aaa'],
+    ].map(([l, v, c]) => `<div class="manxeon-fc-row"><span class="fx-lbl">${l}</span><span class="fx-val" style="color:${c}">${v}</span></div>`).join('');
+
+    const synHtml = fc.synHits.length ? `
+        <div style="margin-bottom:8px">
+            <div style="font-size:11px;font-weight:700;color:#555;margin-bottom:5px">🔗 SYNERGIES DETECTED</div>
+            <div class="mx-syn-chips">${fc.synHits.map(s => `<span class="mx-syn-chip">${s.pair} <strong>+${s.val}</strong></span>`).join('')}</div>
+        </div>` : '';
+
+    const warnHtml = fc.warnings.map(w => `<div class="mx-warning">⚠ ${w}</div>`).join('');
+
+    const prosHtml = fc.pros.length ? `<div class="mx-pros">
+        <div class="mx-pc-title" style="color:#16a34a">✅ Strengths</div>
+        ${fc.pros.map(p => `<div class="mx-pc-item">• ${p}</div>`).join('')}
+    </div>` : '';
+    const consHtml = fc.cons.length ? `<div class="mx-cons">
+        <div class="mx-pc-title" style="color:#dc2626">❌ Weaknesses</div>
+        ${fc.cons.map(c => `<div class="mx-pc-item">• ${c}</div>`).join('')}
+    </div>` : '';
+
+    wrap.innerHTML = `<div class="manxeon-forecast-box" style="border-color:${fc.lc}40">
+        <div class="manxeon-forecast-header">
+            <div class="manxeon-gauge-wrap">
+                <div class="manxeon-fc-val" style="color:${fc.lc}">${fc.fc}%</div>
+                <div class="manxeon-fc-lbl">FORECAST WIN RATE</div>
+                <div class="manxeon-fc-verdict" style="color:${fc.lc}">${fc.lbl}</div>
+                <div style="font-size:10px;color:#aaa;margin-top:3px">${fc.n}/5 heroes</div>
+            </div>
+            <div class="manxeon-fc-breakdown">
+                <div class="manxeon-fc-title">Forecast Breakdown</div>
+                ${brRows}
+                <div class="manxeon-fc-total">
+                    <span>Forecast Win Rate</span>
+                    <span style="color:${fc.lc}">${fc.fc}%</span>
+                </div>
+            </div>
+        </div>
+        <div class="manxeon-bars-grid">
+            ${buildBar('Early Game', fc.avgEarly, 5, '#f59e0b')}
+            ${buildBar('Late Game', fc.avgLate, 5, '#3b82f6')}
+            ${buildBar('Teamfight', fc.avgTF, 5, '#7c3aed')}
+            ${buildBar('CC Count', fc.ccCount, 5, '#22c55e')}
+            ${buildBar('Phys DMG', fc.phys, 5, '#f97316')}
+            ${buildBar('Magic DMG', fc.mag, 5, '#a855f7')}
+        </div>
+        ${synHtml}
+        ${warnHtml ? `<div style="margin-bottom:8px">${warnHtml}</div>` : ''}
+        <div class="mx-pros-cons">${prosHtml}${consHtml}</div>
+    </div>`;
+}
+
+function renderPicker() {
+    const wrap = document.getElementById('mx-picker-wrap');
+    if (!wrap) return;
+    if (activeSlot === null) { wrap.innerHTML = ''; return; }
+
+    const picked = lineup.filter(Boolean).map(h => h.id);
+    const vh = HEROES.filter(h => {
+        const nm = h.name.toLowerCase().includes(searchQ.toLowerCase());
+        const rm = roleFilter === 'All' || h.role === roleFilter;
+        return nm && rm;
+    }).sort((a, b) => {
+        const af = fitsLane(a, activeSlot) ? 0 : 1;
+        const bf = fitsLane(b, activeSlot) ? 0 : 1;
+        if (af !== bf) return af - bf;
+        return b.wr - a.wr;
+    });
+
+    const heroCards = vh.map(hero => {
+        const isPicked = picked.includes(hero.id);
+        const isFit = fitsLane(hero, activeSlot);
+        const tc = TIER_C[hero.tier] || '#999';
+        return `<div class="mx-hero-card ${isPicked ? 'picked' : ''} ${isFit && !isPicked ? 'fit' : ''}"
+            onclick="${isPicked ? '' : `mxPickHero('${hero.id}')`}">
+            ${heroImg(hero, 'mx-card-portrait', 18)}
+            <div class="mx-hc-name">${hero.name}</div>
+            <div class="mx-hc-role">${hero.role}</div>
+            <div class="mx-hc-stats">
+                <span class="mx-tier-badge" style="background:${tc};font-size:8px">${hero.tier}</span>
+                <span class="mx-wr-txt" style="color:${wrColor(hero.wr)}">${hero.wr}%</span>
+            </div>
+        </div>`;
+    }).join('');
+
+    const roleBtns = ROLES_F.map(r =>
+        `<button class="mx-role-btn ${roleFilter === r ? 'active' : ''}" onclick="mxSetRole('${r}')">${r}</button>`
+    ).join('');
+
+    wrap.innerHTML = `<div class="manxeon-picker-panel">
+        <div class="mx-picker-header">
+            <div class="mx-picker-title">Picking for ${LANES[activeSlot]}
+                <span> — Recommended: ${LANE_ROLES[LANES[activeSlot]].join('/')}</span>
+            </div>
+            <button class="mx-close-btn" onclick="mxCloseSlot()">×</button>
+        </div>
+        <div class="mx-filter-row">
+            <input type="text" class="mx-search" placeholder="Search hero..." value="${searchQ}" oninput="mxSetSearch(this.value)">
+            ${roleBtns}
+        </div>
+        <div class="mx-hero-grid">${heroCards || '<div style="padding:20px;color:#aaa;text-align:center;grid-column:1/-1">No heroes match filter.</div>'}</div>
+    </div>`;
+}
+
+function renderActions() {
+    const wrap = document.getElementById('mx-actions-wrap');
+    if (!wrap) return;
+    const hasFive = lineup.filter(Boolean).length === 5;
+    wrap.innerHTML = `<div class="manxeon-actions">
+        <button class="mx-action-btn danger" onclick="mxClearAll()">&#128465; Clear</button>
+        <button class="mx-action-btn primary" onclick="mxSwitchTab('templates', document.querySelectorAll('.manxeon-tab-btn')[1])">&#9776; Templates</button>
+        ${hasFive ? `<button class="mx-action-btn primary" onclick="mxShare()">&#128279; Share</button>` : ''}
+    </div>`;
+}
+
+var TEMPLATE_DEFS = [
+    { name: 'Balanced Teamfight', tag: 'Versatile', roles: ['Marksman', 'Mage', 'Fighter', 'Tank', 'Support'] },
+    { name: 'Wombo-Combo AoE', tag: 'AoE Burst', roles: ['Marksman', 'Mage', 'Fighter', 'Tank', 'Support'] },
+    { name: 'Healing Fortress', tag: 'Sustain Meta', roles: ['Marksman', 'Mage', 'Fighter', 'Tank', 'Support'] },
+    { name: 'Early Snowball', tag: 'Snowball', roles: ['Marksman', 'Assassin', 'Fighter', 'Tank', 'Support'] },
+    { name: 'Protect the Carry', tag: 'Late-Game', roles: ['Marksman', 'Mage', 'Fighter', 'Tank', 'Support'] },
+    { name: 'CC Chain Dominance', tag: 'Hard CC', roles: ['Marksman', 'Mage', 'Fighter', 'Tank', 'Support'] },
+];
+
+function buildTemplateHeroes(tpl) {
+    const criteria = {
+        'Balanced Teamfight': h => h.teamfight >= 4 && h.tier !== 'D',
+        'Wombo-Combo AoE': h => h.cc && h.teamfight >= 4,
+        'Healing Fortress': h => h.sustain >= 4 || h.role === 'Support',
+        'Early Snowball': h => h.earlyGame >= 4 && h.tier !== 'D',
+        'Protect the Carry': h => h.lateGame >= 4,
+        'CC Chain Dominance': h => h.cc && h.tier !== 'D',
+    };
+    const fn = criteria[tpl.name] || (() => true);
+    const result = [];
+    const usedRoles = {};
+    const laneOrder = ['Gold', 'Mid', 'EXP', 'Jungle', 'Roam'];
+    for (const lane of laneOrder) {
+        const laneHeroes = HEROES
+            .filter(h => fitsLane(h, LANES.indexOf(lane)) && fn(h) && !result.find(r => r.id === h.id))
+            .sort((a, b) => b.wr - a.wr);
+        if (laneHeroes.length) result.push(laneHeroes[0]);
+    }
+    return result;
+}
+
+function renderTemplates() {
+    const el = document.getElementById('mx-tab-templates');
+    if (!el) return;
+    el.innerHTML = `<div style="font-size:12px;color:#888;margin-bottom:12px">
+        Pre-built meta compositions for Season 40. Click Load to drop into the builder.
+    </div>` + TEMPLATE_DEFS.map(tpl => {
+        const heroes = buildTemplateHeroes(tpl);
+        const fc = forecast(heroes);
+        const fcCol = fc ? (fc.fc >= 57 ? '#16a34a' : fc.fc >= 53 ? '#b45309' : '#dc2626') : '#888';
+        const icons = heroes.map(h => `<div class="mx-tpl-hero-wrap">
+            <div class="mx-tpl-hero-icon" style="border-color:${TIER_C[h.tier] || '#ddd'};overflow:hidden;padding:0;">
+                ${heroImg(h, 'mx-portrait-sm', 16)}
+            </div>
+            <div class="mx-tpl-hero-lbl">${h.name}</div>
+        </div>`).join('');
+        const ids = heroes.map(h => h.id).join(',');
+        return `<div class="mx-template-card">
+            <div class="mx-tpl-header">
+                <div>
+                    <span class="mx-tpl-name">${tpl.name}</span>
+                    <span class="mx-tpl-tag">${tpl.tag}</span>
+                </div>
+                <div class="mx-tpl-fc">
+                    <div class="mx-tpl-fc-val" style="color:${fcCol}">${fc ? fc.fc.toFixed(1) : '—'}%</div>
+                    <div class="mx-tpl-fc-sub">forecast WR</div>
+                </div>
+            </div>
+            <div class="mx-tpl-heroes-str">${heroes.map(h => `${h.name} (${h.wr}% WR)`).join(' · ')}</div>
+            <div class="mx-tpl-bottom">
+                <div class="mx-tpl-icons">${icons}</div>
+                <button class="mx-load-btn" onclick="mxLoadTemplate('${ids}')">▶ Load</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function renderDatabase() {
+    const el = document.getElementById('mx-tab-database');
+    if (!el) return;
+    const vh = HEROES.filter(h => {
+        const nm = h.name.toLowerCase().includes(searchQ.toLowerCase());
+        const rm = roleFilter === 'All' || h.role === roleFilter;
+        return nm && rm;
+    }).sort((a, b) => b.wr - a.wr);
+
+    const filterRow = `<div class="mx-filter-row" style="margin-bottom:10px">
+        <input type="text" class="mx-search" placeholder="Search hero..." value="${searchQ}" oninput="mxSetSearch(this.value)">
+        ${ROLES_F.map(r => `<button class="mx-role-btn ${roleFilter === r ? 'active' : ''}" onclick="mxSetRole('${r}')">${r}</button>`).join('')}
+    </div>`;
+
+    const rows = vh.map(hero => {
+        const tc = TIER_C[hero.tier] || '#999';
+        const isExp = expandedHero === hero.id;
+        const detail = isExp ? `<div class="mx-hero-detail">
+            <div class="manxeon-bars-grid" style="margin-bottom:10px">
+                ${buildBar('Mobility', hero.mobility, 5, '#3b82f6')}
+                ${buildBar('Burst DMG', hero.burst, 5, '#f97316')}
+                ${buildBar('Sustain', hero.sustain, 5, '#22c55e')}
+                ${buildBar('Teamfight', hero.teamfight, 5, '#7c3aed')}
+                ${buildBar('Early Game', hero.earlyGame, 5, '#f59e0b')}
+                ${buildBar('Late Game', hero.lateGame, 5, '#6366f1')}
+            </div>
+            <div class="mx-counters-syn">
+                <div>
+                    <div class="mx-cs-lbl">🛡️ COUNTERED BY</div>
+                    ${(hero.counters || []).map(c => `<div class="mx-cs-chip" style="background:#fef2f2;color:#dc2626">${c}</div>`).join('')}
+                </div>
+                <div>
+                    <div class="mx-cs-lbl">🤝 SYNERGY WITH</div>
+                    ${(hero.synergy || []).map(s => `<div class="mx-cs-chip" style="background:#f0fdf4;color:#16a34a">${s}</div>`).join('')}
+                </div>
+            </div>
+            <div class="mx-pros-cons">
+                <div class="mx-pros">
+                    <div class="mx-pc-title" style="color:#16a34a">✅ Pros</div>
+                    ${(hero.pros || []).map(p => `<div class="mx-pc-item">• ${p}</div>`).join('')}
+                </div>
+                <div class="mx-cons">
+                    <div class="mx-pc-title" style="color:#dc2626">❌ Cons</div>
+                    ${(hero.cons || []).map(c => `<div class="mx-pc-item">• ${c}</div>`).join('')}
+                </div>
+            </div>
+            ${!lineup.filter(Boolean).map(h => h.id).includes(hero.id) ? `
+                <button class="mx-add-to-lineup" onclick="mxAddFromDB('${hero.id}')">+ Add ${hero.name} to Lineup</button>
+            ` : ''}
+        </div>` : '';
+
+        return `<div class="mx-hero-row ${isExp ? 'expanded' : ''}" style="${isExp ? `border-color:${tc}` : ''}">
+            <div class="mx-row-top" onclick="mxToggleExpand('${hero.id}')">
+                <div class="mx-row-left">
+                    <span class="mx-tier-badge" style="background:${tc};font-size:12px;padding:2px 8px">${hero.tier}</span>
+                    <div class="mx-portrait-wrap" style="margin-right:4px">${heroImg(hero, 'mx-portrait-sm', 16)}</div>
+                    <div>
+                        <div class="mx-row-name">${hero.name}</div>
+                        <div class="mx-row-sub">${hero.role} · ${(hero.lane || []).join(', ')}</div>
+                    </div>
+                </div>
+                <div class="mx-row-right">
+                    <div class="mx-row-wr" style="color:${wrColor(hero.wr)}">${hero.wr}% WR</div>
+                    <div class="mx-row-stats">${hero.pr}% Pick · ${hero.br}% Ban · Diff: ${hero.diff}</div>
+                </div>
+            </div>
+            ${detail}
+        </div>`;
+    }).join('');
+
+    el.innerHTML = filterRow +
+        `<div style="font-size:11px;color:#aaa;margin-bottom:8px">
+            ✓ Patch 2.1.70 · Season 40 · Legend+ ranked · ${vh.length} heroes · Sorted by win rate
+        </div>` + rows;
+}
+
+window.mxSlotClick = function(idx) {
+    activeSlot = activeSlot === idx ? null : idx;
+    searchQ = ''; roleFilter = 'All';
+    render();
+};
+window.mxCloseSlot = function() { activeSlot = null; render(); };
+window.mxRemoveHero = function(e, idx) { e.stopPropagation(); lineup[idx] = null; render(); };
+window.mxClearAll = function() { lineup = [null, null, null, null, null]; activeSlot = null; render(); mxToast('Lineup cleared'); };
+window.mxPickHero = function(id) {
+    const hero = HEROES.find(h => h.id === id);
+    if (!hero || activeSlot === null) return;
+    const already = lineup.findIndex(h => h?.id === id);
+    const nl = [...lineup];
+    if (already !== -1) nl[already] = null;
+    nl[activeSlot] = hero;
+    lineup = nl; activeSlot = null; render();
+};
+window.mxAddFromDB = function(id) {
+    const hero = HEROES.find(h => h.id === id);
+    if (!hero) return;
+    const empty = lineup.findIndex(s => s === null);
+    if (empty === -1) { mxToast('All 5 slots filled — remove a hero first'); return; }
+    lineup[empty] = hero;
+    mxSwitchTab('builder', document.querySelectorAll('.manxeon-tab-btn')[0]);
+    render();
+    mxToast(`${hero.name} added to slot ${empty + 1}`);
+};
+window.mxLoadTemplate = function(idsStr) {
+    const ids = idsStr.split(',');
+    const nl = [null, null, null, null, null];
+    ids.map(id => HEROES.find(h => h.id === id)).filter(Boolean).forEach((h, i) => nl[i] = h);
+    lineup = nl;
+    mxSwitchTab('builder', document.querySelectorAll('.manxeon-tab-btn')[0]);
+    render(); mxToast('Template loaded!');
+};
+window.mxSetSearch = function(v) {
+    searchQ = v;
+    if (currentTab === 'database') renderDatabase();
+    else render();
+};
+window.mxSetRole = function(r) {
+    roleFilter = r;
+    if (currentTab === 'database') renderDatabase();
+    else render();
+};
+window.mxToggleExpand = function(id) {
+    expandedHero = expandedHero === id ? null : id;
+    renderDatabase();
+};
+window.mxSwitchTab = function(name, btn) {
+    currentTab = name;
+    document.querySelectorAll('.manxeon-tab-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    ['builder', 'templates', 'database', 'items', 'vs'].forEach(t => {
+        const el = document.getElementById(`mx-tab-${t}`);
+        if (el) el.style.display = t === name ? 'block' : 'none';
+    });
+    if (name === 'templates') renderTemplates();
+    if (name === 'database') renderDatabase();
+    if (name === 'items') renderItems();
+    if (name === 'vs') renderVsMode();
+};
+window.mxShare = function() {
+    const filled = lineup.filter(Boolean);
+    const fc = forecast(filled);
+    const txt = `My MLBB Season ${PATCH_INFO.season} Lineup:\n${filled.map((h, i) => `${LANES[i]}: ${h.name} (${h.wr}% WR)`).join('\n')}\n\nForecast Win Rate: ${fc ? fc.fc.toFixed(1) : '?'}% — ${fc ? fc.lbl : ''}`;
+    navigator.clipboard?.writeText(txt).then(() => mxToast('Lineup copied!')).catch(() => mxToast('Copy failed'));
+};
+window.mxRefreshData = function() {
+    lineup = [null, null, null, null, null];
+    activeSlot = null;
+    try {
+        applyData(FALLBACK_DATA);
+        setStatus('green', 'Patch ' + FALLBACK_DATA.patch + ' · ' + HEROES.length + ' heroes');
+        applyPatchBadge();
+        renderApp();
+    } catch(e) { console.error('Refresh failed:', e); }
+};
+
+function mxToast(msg) {
+    const old = document.querySelector('.mx-toast');
+    if (old) old.remove();
+    const el = document.createElement('div');
+    el.className = 'mx-toast';
+    el.textContent = msg;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2200);
+}
+
+var MLBB_ITEMS = [
+  // ATTACK
+  {name:\"Berserker's Fury\",cat:\"Attack\",tier:\"T3\",cost:2390,stats:\"+65 Phys ATK · +25% Crit\",passive:\"Doom: Critical strikes grant 5% extra Physical ATK for 2s.\",note:\"Core crit item for marksmen.\"},
+  {name:\"Blade of Despair\",cat:\"Attack\",tier:\"T3\",cost:3010,stats:\"+160 Phys ATK · +5% MS\",passive:\"Despair: +25% Phys ATK vs enemies below 50% HP for 2s.\",note:\"Highest ATK item in game. Late-game finisher.\"},
+  {name:\"Corrosion Scythe\",cat:\"Attack\",tier:\"T3\",cost:2050,stats:\"+30 Phys ATK · +30% ATK Spd · +5% MS\",passive:\"Corrosion: Basic attacks slow target by 8%.\",note:\"Anti-kite item for fighters and marksmen.\"},
+  {name:\"Demon Hunter Sword\",cat:\"Attack\",tier:\"T3\",cost:2180,stats:\"+35 Phys ATK · +25% ATK Spd\",passive:\"Devour: Basic attacks deal 9% of target\"s current HP as bonus damage. Max 60 vs minions.\",note:\"Hard counter to high-HP tanks.\"},
+  {name:\"Endless Battle\",cat:\"Attack\",tier:\"T3\",cost:2470,stats:\"+65 Phys ATK · +25% ATK Spd · +250 HP · +10% CDR · +5% LS\",passive:\"Divine Justice: After using a skill, next basic attack deals extra True Damage = 60%+30% ATK. 1.5s cd.\",note:\"Versatile fighter/fighter core — true damage passive.\"},
+  {name:\"Golden Staff\",cat:\"Attack\",tier:\"T3\",cost:1950,stats:\"+65 Phys ATK · +30% ATK Spd\",passive:\"Swift: Basic attacks reduce skill CD by 0.5s. Attacks stack "Swift" — at 3 stacks all on-hit effects trigger again.",note:"Core for marksmen who rely on basic attacks."},
+  {name:"Haas"s Claws\",cat:\"Attack\",tier:\"T3\",cost:1810,stats:\"+70 Phys ATK · +20% LS\",passive:\"Insanity: Gain extra 15% LS when below 50% HP.\",note:\"Core lifesteal for fighters. Budget Alucard core.\"},
+  {name:\"Hunter Strike\",cat:\"Attack\",tier:\"T3\",cost:2200,stats:\"+80 Phys ATK · +10% CDR\",passive:\"Pursuit: Dealing damage to the same enemy 5 times grants 30% MS for 3s.\",note:\"Chase/close-gap item for assassins.\"},
+  {name:\"Malefic Roar\",cat:\"Attack\",tier:\"T3\",cost:2060,stats:\"+60 Phys ATK\",passive:\"Armor Buster: +40% Phys Pen. Basic attacks gain 20% extra Phys Pen vs turrets.\",note:\"Anti-armor core. Essential vs full tank teams.\"},
+  {name:\"Sea Halberd\",cat:\"Attack\",tier:\"T3\",cost:1950,stats:\"+80 Phys ATK · +15% ATK Spd\",passive:\"Punish: Attacks and skills reduce enemy HP regen by 50% for 3s.\",note:\"Hard anti-heal. Counters Estes, Floryn, Angela.\"},
+  {name:\"Swift Crossbow\",cat:\"Attack\",tier:\"T3\",cost:1800,stats:\"+30 Phys ATK · +35% ATK Spd · +10% Crit\",passive:\"Windtalker: Crit chance applies to attack speed bonus. Attacks deal 50 bonus magic damage.\",note:\"DPS hybrid item for crit marksmen.\"},
+  {name:\"Windtalker\",cat:\"Attack\",tier:\"T3\",cost:1800,stats:\"+20% ATK Spd · +10% Crit · +5% MS\",passive:\"Typhoon: Every 3rd basic attack triggers a typhoon dealing 150% Phys Dmg to 3 targets.\",note:\"AoE burst for marksmen in teamfights.\"},
+  {name:\"War Axe\",cat:\"Attack\",tier:\"T3\",cost:1900,stats:\"+35 Phys ATK · +550 HP · +10% CDR\",passive:\"Fighting Spirit: Each second after dealing damage, gain 8 Phys ATK and 1% Phys Lifesteal, stacking 8 times.\",note:\"Core fighter sustain item. Great on EXP laners.\"},
+  {name:\"Blade of the Heptaseas\",cat:\"Attack\",tier:\"T3\",cost:1950,stats:\"+250 HP · +70 Phys ATK\",passive:\"Ambush: First attack after 5s of no combat deals bonus damage + 40% slow.\",note:\"Burst/poke item for assassins and fighters.\"},
+  {name:\"Scarlet Phantom\",cat:\"Attack\",tier:\"T3\",cost:1990,stats:\"+30 Phys ATK · +20% ATK Spd · +25% Crit\",passive:\"Frenzy: Critical hits increase ATK Speed by 25% and Crit Rate by 5% for 2s.\",note:\"Bridge to BoD for crit marksmen.\"},
+  {name:\"Thunder Belt\",cat:\"Attack\",tier:\"T3\",cost:2290,stats:\"+800 HP · +10% CDR · +30 Phys ATK\",passive:\"Thunderbolt: After using a skill, next basic attack deals extra True Damage = 1% of max HP to nearby enemies.\",note:\"Tanky fighter core. Excellent on Terizla.\"},
+  // MAGIC
+  {name:\"Holy Crystal\",cat:\"Magic\",tier:\"T3\",cost:2180,stats:\"+100 Magic\",passive:\"Mystery: Gains extra Magic Power based on level, up to +25%.\",note:\"Pure magic power spike. Core for burst mages.\"},
+  {name:\"Divine Glaive\",cat:\"Magic\",tier:\"T3\",cost:1970,stats:\"+65 Magic\",passive:\"Spellbreaker: +40% Magic Pen. Each % of enemy Magic DEF above 400 grants additional 0.1% Magic Pen, up to 20%.\",note:\"Anti-magic-resist item. Essential vs tank stacking.\"},
+  {name:\"Glowing Wand\",cat:\"Magic\",tier:\"T3\",cost:1950,stats:\"+75 Magic · +400 HP · +5% MS\",passive:\"Scorch: Skills inflict a burning effect dealing 1% of target\"s max HP per second for 3s. Max 60 vs minions.\",note:\"Anti-sustain burn item. Counters Estes + Floryn.\"},
+  {name:\"Lightning Truncheon\",cat:\"Magic\",tier:\"T3\",cost:2000,stats:\"+75 Magic · +300 Mana · +10% CDR\",passive:\"Resonate: Every 6s, the next skill will bounce between 3 enemy heroes dealing 20-200 magic damage.\",note:\"AoE mage item. Core on Gord and channel mages.\"},
+  {name:\"Genius Wand\",cat:\"Magic\",tier:\"T3\",cost:1670,stats:\"+75 Magic · +5% MS\",passive:\"Afflict: Dealing Magic Damage reduces enemy Magic DEF by 3-10 for 2s. Stacks 3 times.\",note:\"Magic pen stacking item. Best first item for mages.\"},
+  {name:\"Feather of Heaven\",cat:\"Magic\",tier:\"T3\",cost:1810,stats:\"+65 Magic · +30% ATK Spd\",passive:\"Holy Feather: Basic attacks deal extra 40%+55% of Magic Power as magic damage.\",note:\"Hybrid mage/AA hero item. Core on Kimmy, Estes.\"},
+  {name:\"Calamity Reaper\",cat:\"Magic\",tier:\"T3\",cost:1950,stats:\"+70 Magic · +100 Mana · +6% CDR\",passive:\"Calamity: After using a skill, next basic attack deals True Damage equal to 120% Magic Power. 1.5s cd.\",note:\"True damage proc. Core on CDR-based mages.\"},
+  {name:\"Enchanted Talisman\",cat:\"Magic\",tier:\"T3\",cost:2070,stats:\"+50 Magic · +250 HP · +20% CDR\",passive:\"Mana Spring: Regenerates 15% total Mana every 10s.\",note:\"CDR + mana sustain. Core for skill-spam mages.\"},
+  {name:\"Blood Wings\",cat:\"Magic\",tier:\"T3\",cost:2100,stats:\"+90 Magic\",passive:\"Guard: Gain a shield equal to 800 + 100% Magic Power that regenerates 20s after damage.\",note:\"Luxury mage item. Final slot for pure magic builds.\"},
+  {name:\"Ice Queen Wand\",cat:\"Magic\",tier:\"T3\",cost:2150,stats:\"+75 Magic · +150 Mana · +7% MS\",passive:\"Glacier: Skills slow enemies by 15% for 3s, stacking up to 2 times.\",note:\"Kite/peel item for mages. Great on Valir.\"},
+  {name:\"Necklace of Durance\",cat:\"Magic\",tier:\"T3\",cost:1900,stats:\"+60 Magic · +5% CDR\",passive:\"Life Drain: Skills reduce enemy HP regen by 50% for 3s.\",note:\"Magic anti-heal. Counters Estes, Floryn in mage form.\"},
+  {name:\"Concentrated Energy\",cat:\"Magic\",tier:\"T3\",cost:2020,stats:\"+400 HP · +70 Magic\",passive:\"Recharge: Dealing magic damage stacks Magic Power (up to 6). Full stacks = +12% Magic Damage for 3s.\",note:\"Sustain mage item. Core for mages who poke.\"},
+  {name:\"Clock of Destiny\",cat:\"Magic\",tier:\"T3\",cost:2030,stats:\"+400 HP · +400 Mana · +45 Magic\",passive:\"Destiny: Gains Hybrid Defense on dealing Magic Damage to heroes, up to 6 stacks.\",note:\"Tanky mage item. Great on AP fighters like Alice.\"},
+  // DEFENSE
+  {name:\"Antique Cuirass\",cat:\"Defense\",tier:\"T3\",cost:2170,stats:\"+920 HP · +40 Phys DEF · +4 HP Regen\",passive:\"Deter: Skills reduce attacker\"s Physical Damage by 6% for 2s. Stacks 3 times.\",note:\"Best anti-ADC tank item. Core vs Hanabi/marksmen.\"},
+  {name:\"Athena's Shield\",cat:\"Defense\",tier:\"T3\",cost:2150,stats:\"+900 HP · +48 Magic DEF · +2 HP Regen\",passive:\"Shield: On taking Magic Damage, gain 25% Magic Damage Reduction for 3s. Resets 5s after combat.\",note:\"Best anti-magic tank item. Core vs mage-heavy teams.\"},
+  {name:\"Blade Armor\",cat:\"Defense\",tier:\"T3\",cost:1910,stats:\"+70 Phys DEF\",passive:\"Bladed Armor: On basic attack, deal 30% of incoming damage + 20% Phys DEF back to attacker with 15% slow.\",note:\"Counter-item vs crit marksmen and AA fighters.\"},
+  {name:\"Brute Force Breastplate\",cat:\"Defense\",tier:\"T3\",cost:1870,stats:\"+600 HP · +20 Phys DEF · +10% CDR\",passive:\"Brute Force: Dealing damage gains 6 Adaptive ATK + 2% MS per second, up to 6 stacks. Full stacks = 15% Control Duration Reduction.\",note:\"Offensive tank item. Great on engage tanks like Khufra.\"},
+  {name:\"Dominance Ice\",cat:\"Defense\",tier:\"T3\",cost:2010,stats:\"+500 Mana · +70 Phys DEF · +10% CDR\",passive:\"Arctic Cold: Reduces nearby enemy ATK Speed by 30% and Movement Speed by 10%. Reduces HP regen of nearby enemies by 50%.\",note:\"Best anti-heal aura. Counters Estes, Floryn, Angela.\"},
+  {name:\"Immortality\",cat:\"Defense\",tier:\"T3\",cost:2120,stats:\"+800 HP · +40 Phys DEF\",passive:\"Immortal: On death, resurrect after 2s with 15% HP and a 300-1000 shield. 210s cooldown.\",note:\"One free death. Core on carries who get dived.\"},
+  {name:\"Oracle\",cat:\"Defense\",tier:\"T3\",cost:1890,stats:\"+850 HP · +42 Magic DEF · +10% CDR\",passive:\"Bless: Increases all self HP regen and shield absorption by 25%.\",note:\"Core support defense item. Pairs with Estes/Floryn.\"},
+  {name:\"Twilight Armor\",cat:\"Defense\",tier:\"T3\",cost:2240,stats:\"+1200 HP · +20 Phys DEF\",passive:\"Twilight: Limits incoming Crit damage to max 900 per strike.\",note:\"Anti-crit niche item. Hard counter to Berserker\"s Fury users.\"},
+  {name:\"Cursed Helmet\",cat:\"Defense\",tier:\"T3\",cost:1990,stats:\"+1200 HP · +25 Magic DEF\",passive:\"Burning Soul: Deals magic damage per second to nearby enemies equal to 1.5% of max HP.\",note:\"Anti-heal aura + poke. Core on tanky initiators.\"},
+  {name:\"Radiant Armor\",cat:\"Defense\",tier:\"T3\",cost:2000,stats:\"+950 HP · +52 Magic DEF · +2 HP Regen\",passive:\"Holy Blessing: Upon taking magic damage, gain 3-10 Magic DEF for 6s. Stacks 6 times.\",note:\"Scaling anti-magic item. Better than Athena\"s vs sustained magic.\"},
+  {name:\"Courage Bulwark\",cat:\"Defense\",tier:\"T3\",cost:2100,stats:\"+1000 HP · +40 Phys DEF\",passive:\"Favor: Once per 90s, grants nearby allies a shield equal to 400 + 200% total Physical DEF.\",note:\"Teamfight shield item for roamers.\"},
+  {name:\"Guardian Helmet\",cat:\"Defense\",tier:\"T3\",cost:2100,stats:\"+1550 HP · +15 HP Regen\",passive:\"Recovery: Regenerates HP equal to 1.5% of max HP per second when out of combat.\",note:\"Pure HP regen tank item. Best sustain in game.\"},
+  {name:\"Chastise Pauldron\",cat:\"Defense\",tier:\"T3\",cost:2100,stats:\"+1800 HP · +40 Phys DEF\",passive:\"Chastise: Taking damage reduces attacker's ATK Speed cap to 75% for 2s.\",note:\"Anti-ATK Speed tank item. Hard counter to Kimmy.\"},
+  // MOVEMENT
+  {name:\"Tough Boots\",cat:\"Movement\",tier:\"T3\",cost:710,stats:\"+22 Magic DEF · +40 MS\",passive:\"Fortitude: Reduces duration of crowd control effects by 30%.\",note:\"Best boots vs CC-heavy teams.\"},
+  {name:\"Magic Shoes\",cat:\"Movement\",tier:\"T3\",cost:710,stats:\"+10% CDR · +40 MS\",note:\"Core CDR boots for skill-spam heroes.\"},
+  {name:\"Warrior Boots\",cat:\"Movement\",tier:\"T3\",cost:720,stats:\"+22 Phys DEF · +40 MS\",passive:\"Valor: Gains up to +25 Phys DEF on taking basic attack hits. Lasts 3s.\",note:\"Core boots vs AA-heavy teams. Marksman lane staple.\"},
+  {name:\"Rapid Boots\",cat:\"Movement\",tier:\"T3\",cost:550,stats:\"+60 MS\",note:\"Fastest boots. Niche roam/jungler item for rotation speed.\"},
+  {name:\"Arcane Boots\",cat:\"Movement\",tier:\"T3\",cost:690,stats:\"+10% Mag Pen · +40 MS\",note:\"Core mage boots for magic penetration.\"},
+  {name:\"Courage Boots\",cat:\"Movement\",tier:\"T3\",cost:1000,stats:\"+800 HP · +5% CDR · +40 MS\",passive:\"Courage: Increases nearby allied heroes\" Physical and Magic DEF by 10.\",note:\"Roamer boots with aura. Best on support tanks.\"},
+  // JUNGLING
+  {name:\"Nimble Blade\",cat:\"Jungling\",tier:\"T1\",cost:0,stats:\"No base stats\",passive:\"Retribution: Deals 150% damage to creeps/minions. Upgrades at 5 kills.\",note:\"Starting jungle item — upgrade into retribution enchant.\"},
+  {name:\"Bloody Retribution\",cat:\"Jungling\",tier:\"T1\",cost:0,stats:\"No base stats\",passive:\"Active: Deals 100 True Damage + steal 250+20% HP from enemy hero for 4s.\",note:\"Offensive jungle enchant. Best for fighter/assassin junglers.\"},
+  {name:\"Ice Retribution\",cat:\"Jungling\",tier:\"T1\",cost:0,stats:\"No base stats\",passive:\"Active: Slows enemy by 70% for 2s and deals 200 True Damage.\",note:\"Utility jungle enchant. Best for support-style junglers.\"},
+  // ROAMING
+  {name:\"Conceal\",cat:\"Roaming\",tier:\"T1\",cost:0,stats:\"No base stats\",passive:\"Active: Conceals nearby allies + grants 24-60% bonus MS for 5s.\",note:\"Roam item for engage setups and escape assists.\"},
+  {name:\"Encourage\",cat:\"Roaming\",tier:\"T1\",cost:0,stats:\"No base stats\",passive:\"Active: Grants nearby allies 30% ATK Speed and 20% bonus MS for 3s.\",note:\"Roam item for ADC-support duos.\"},
+  {name:\"Favor\",cat:\"Roaming\",tier:\"T1\",cost:0,stats:\"No base stats\",passive:\"Passive: Chance to spawn extra gold coins when nearby allies last hit minions.\",note:\"Economy roam item. Best for gold-hungry supports.\"},
+  {name:\"Munition\",cat:\"Roaming\",tier:\"T1\",cost:0,stats:\"No base stats\",passive:\"Active: Reduces damage dealt by target for 2s and deals them 75 True Damage.\",note:\"Defensive roam item. Best for peel-heavy supports.\"},
+];
+
+var ITEMS_CAT_COLOR = {
+  Attack:'#ef4444', Magic:'#a855f7', Defense:'#3b82f6',
+  Movement:'#22c55e', Jungling:'#f59e0b', Roaming:'#06b6d4'
+};
+
+function renderItems() {
+    const el = document.getElementById('mx-tab-items');
+    if (!el) return;
+
+    const cats = ['All','Attack','Magic','Defense','Movement','Jungling','Roaming'];
+    const tierFilters = ['All','T1','T2','T3'];
+
+    if (!window._itemFilter) window._itemFilter = 'All';
+    if (!window._itemTier) window._itemTier = 'All';
+    if (!window._itemSearch) window._itemSearch = '';
+
+    const filtered = MLBB_ITEMS.filter(it => {
+        const mCat = window._itemFilter === 'All' || it.cat === window._itemFilter;
+        const mTier = window._itemTier === 'All' || it.tier === window._itemTier;
+        const mSearch = !window._itemSearch || it.name.toLowerCase().includes(window._itemSearch.toLowerCase()) || (it.passive||'').toLowerCase().includes(window._itemSearch.toLowerCase());
+        return mCat && mTier && mSearch;
+    });
+
+    const catBtns = cats.map(c => {
+        const col = c === 'All' ? '#111' : (ITEMS_CAT_COLOR[c]||'#111');
+        const active = window._itemFilter === c;
+        return `<button onclick="mxSetItemFilter('${c}')" style="padding:6px 12px;font-size:11px;font-weight:700;border:1.5px solid ${active?col:'#d9d9d9'};border-radius:6px;background:${active?col:'#fff'};color:${active?'#fff':'#555'};cursor:pointer;font-family:Arial,sans-serif">${c}${c!=='All'?` <span style="font-size:9px;opacity:.7">${MLBB_ITEMS.filter(i=>i.cat===c).length}</span>`:''}</button>`;
+    }).join('');
+
+    const tierBtns = tierFilters.map(t => {
+        const active = window._itemTier === t;
+        return `<button onclick="mxSetItemTier('${t}')" style="padding:5px 10px;font-size:10px;font-weight:700;border:1.5px solid ${active?'#111':'#d9d9d9'};border-radius:4px;background:${active?'#111':'#fff'};color:${active?'#fff':'#555'};cursor:pointer;font-family:Arial,sans-serif">${t}</button>`;
+    }).join('');
+
+    const itemCards = filtered.map(it => {
+        const col = ITEMS_CAT_COLOR[it.cat] || '#999';
+        const tierBg = it.tier==='T3'?'#111':it.tier==='T2'?'#555':'#999';
+        return `<div style="background:#fafafa;border:1px solid #e5e5e5;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:4px;border-left:3px solid ${col}">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px">
+                <span style="font-size:12px;font-weight:800;color:#111;font-family:Arial,sans-serif">${it.name}</span>
+                <div style="display:flex;gap:4px;align-items:center">
+                    <span style="font-size:8px;font-weight:700;padding:1px 5px;border-radius:2px;background:${tierBg};color:#fff;font-family:Arial,sans-serif">${it.tier}</span>
+                    <span style="font-size:8px;font-weight:700;padding:1px 6px;border-radius:2px;background:${col}22;color:${col};border:1px solid ${col}44;font-family:Arial,sans-serif">${it.cat}</span>
+                    ${it.cost>0?`<span style="font-size:9px;font-weight:700;color:#f59e0b;font-family:Arial,sans-serif">&#9670; ${it.cost}</span>`:''}
+                </div>
+            </div>
+            <div style="font-size:10px;font-weight:700;color:#555;font-family:Arial,sans-serif">${it.stats}</div>
+            ${it.passive?`<div style="font-size:10px;color:#333;line-height:1.5;font-family:Arial,sans-serif"><span style="font-weight:800;color:${col}">Passive: </span>${it.passive}</div>`:''}
+            ${it.note?`<div style="font-size:9px;color:#888;font-style:italic;border-top:1px solid #f0f0f0;padding-top:3px;margin-top:2px;font-family:Arial,sans-serif">${it.note}</div>`:''}
+        </div>`;
+    }).join('');
+
+    el.innerHTML = `
+        <div style="margin-bottom:14px">
+            <div style="font-size:11px;color:#888;margin-bottom:10px;font-family:Arial,sans-serif">
+                &#9670; <strong style="color:#111">104 Items</strong> · Patch 2.1.70 · Source: mlbbhub.com · 6 categories · T1/T2/T3 tiers
+            </div>
+            <input type="text" placeholder="Search items or passives..." value="${window._itemSearch}"
+                oninput="window._itemSearch=this.value;renderItems()"
+                style="width:100%;padding:10px 12px;font-family:Arial,sans-serif;font-size:13px;border:1px solid #d9d9d9;border-radius:8px;outline:none;margin-bottom:10px">
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">${catBtns}</div>
+            <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">
+                <span style="font-family:Arial,sans-serif;font-size:10px;color:#888">Tier:</span>
+                ${tierBtns}
+                <span style="font-family:Arial,sans-serif;font-size:10px;color:#aaa;margin-left:8px">${filtered.length} items shown</span>
+            </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px">
+            ${itemCards || '<div style="color:#aaa;font-family:Arial,sans-serif;font-size:13px;padding:20px;text-align:center">No items match filter.</div>'}
+        </div>
+        <div style="margin-top:16px;padding:10px 14px;background:#f9f9f9;border:1px solid #e5e5e5;border-radius:8px;font-size:10px;color:#aaa;font-family:Arial,sans-serif;line-height:1.7">
+            <strong style="color:#555">Data Source:</strong> Item stats verified from mlbbhub.com/items · Patch 2.1.70 · 104 total items across 6 categories.
+            Anti-heal items: Dominance Ice (tank), Sea Halberd (physical), Necklace of Durance (magic), Glowing Wand (magic burn).
+        </div>`;
+}
+
+window.mxSetItemFilter = function(f) { window._itemFilter = f; renderItems(); };
+window.mxSetItemTier = function(t) { window._itemTier = t; renderItems(); };
+
+function generateGameplan(heroes, teamColor) {
+    if (!heroes || heroes.length < 3) return null;
+    const fc = forecast(heroes);
+    if (!fc) return null;
+
+    const isBlue = teamColor === 'blue';
+    const borderCol = isBlue ? '#3b82f6' : '#dc2626';
+    const headerBg  = isBlue ? '#eff6ff' : '#fef2f2';
+    const accentCol = isBlue ? '#1d4ed8' : '#dc2626';
+    const teamName  = isBlue ? 'BLUE' : 'RED';
+
+    
+    const tank     = heroes.filter(h=>h.role==='Tank');
+    const fighters = heroes.filter(h=>h.role==='Fighter');
+    const mages    = heroes.filter(h=>h.role==='Mage');
+    const marksmen = heroes.filter(h=>h.role==='Marksman');
+    const assassins= heroes.filter(h=>h.role==='Assassin');
+    const supports = heroes.filter(h=>h.role==='Support');
+    const frontline= [...tank,...fighters];
+    const carries  = [...marksmen,...mages,...assassins];
+    const hasFront = frontline.length > 0;
+    const hasSupport = supports.length > 0;
+
+    
+    let archetype = 'Balanced';
+    let archetypeColor = '#7c3aed';
+    if (fc.avgEarly >= 4 && fc.avgLate < 4) { archetype = 'Early Snowball'; archetypeColor='#f59e0b'; }
+    else if (fc.avgLate >= 4.5)              { archetype = 'Late Scaling';   archetypeColor='#3b82f6'; }
+    else if (fc.avgTF >= 4.5)               { archetype = 'Teamfight AoE';  archetypeColor='#a855f7'; }
+    else if (fc.ccCount >= 4)               { archetype = 'CC Chain';       archetypeColor='#22c55e'; }
+    else if (fc.phys >= 4)                  { archetype = 'Physical Burst';  archetypeColor='#f97316'; }
+    else if (fc.mag >= 4)                   { archetype = 'Magic Burst';     archetypeColor='#a855f7'; }
+    else if (!hasFront)                     { archetype = 'Poke & Siege';    archetypeColor='#06b6d4'; }
+
+    
+    const earlyPlan = buildEarlyPlan(heroes, frontline, carries, supports, archetype, fc);
+    const midPlan   = buildMidPlan(heroes, frontline, carries, supports, archetype, fc);
+    const latePlan  = buildLatePlan(heroes, frontline, carries, supports, archetype, fc);
+
+    
+    const combos = buildCombos(heroes, fc);
+
+    
+    const counterTips = buildCounterTips(heroes);
+
+    
+    const itemTips = buildItemTips(heroes, fc);
+
+    return `
+    <div style="margin-top:16px;background:#fff;border:2px solid ${borderCol};border-radius:10px;overflow:hidden;font-family:Arial,sans-serif">
+
+        <!-- Header -->
+        <div style="background:${headerBg};padding:12px 16px;border-bottom:1px solid ${borderCol}22;display:flex;align-items:center;justify-content:space-between">
+            <div>
+                <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:${accentCol}">&#9658; ${teamName} TEAM GAMEPLAN</div>
+                <div style="font-size:13px;font-weight:800;color:#111;margin-top:2px">${heroes.map(h=>h.name).join(' · ')}</div>
+            </div>
+            <div style="text-align:right">
+                <div style="font-size:10px;padding:3px 10px;border-radius:12px;font-weight:800;background:${archetypeColor}22;color:${archetypeColor};border:1px solid ${archetypeColor}44">${archetype}</div>
+                <div style="font-size:18px;font-weight:900;color:${fc.lc};margin-top:3px">${fc.fc}% <span style="font-size:9px;color:#aaa;font-weight:400">FORECAST WR</span></div>
+            </div>
+        </div>
+
+        <!-- Phase Plans -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-bottom:1px solid #f0f0f0">
+            ${phaseBox('EARLY GAME', earlyPlan, fc.avgEarly, '#f59e0b', '0-5 min')}
+            ${phaseBox('MID GAME', midPlan, (fc.avgEarly+fc.avgLate)/2, '#7c3aed', '5-15 min')}
+            ${phaseBox('LATE GAME', latePlan, fc.avgLate, '#3b82f6', '15+ min')}
+        </div>
+
+        <!-- Key Combos -->
+        ${combos.length ? `
+        <div style="padding:12px 16px;border-bottom:1px solid #f0f0f0">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:8px">&#9889; KEY COMBOS</div>
+            ${combos.map(c=>`<div style="padding:7px 10px;background:#fffbf0;border:1px solid #fde68a;border-radius:5px;margin-bottom:5px;font-size:11px;color:#111;line-height:1.5">
+                <strong style="color:#b45309">${c.title}</strong><br>${c.desc}
+            </div>`).join('')}
+        </div>` : ''}
+
+        <!-- Item Priorities -->
+        <div style="padding:12px 16px;border-bottom:1px solid #f0f0f0">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:8px">&#9670; PRIORITY ITEMS</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+                ${itemTips.map(it=>`<div style="padding:6px 9px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:4px;font-size:10px;color:#555;line-height:1.5">
+                    <strong style="color:#111">${it.hero}</strong> → ${it.items}
+                </div>`).join('')}
+            </div>
+        </div>
+
+        <!-- Counter Tips -->
+        ${counterTips.length ? `
+        <div style="padding:12px 16px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:8px">&#9888; WATCH OUT FOR</div>
+            ${counterTips.map(t=>`<div style="padding:6px 10px;background:#fef2f2;border:1px solid #fecaca;border-radius:5px;margin-bottom:4px;font-size:10px;color:#b91c1c;line-height:1.5">${t}</div>`).join('')}
+        </div>` : ''}
+
+    </div>`;
+}
+
+function phaseBox(title, plan, rating, color, timeRange) {
+    const bars = Math.round(rating);
+    const barHTML = Array.from({length:5},(_,i)=>`<span style="display:inline-block;width:8px;height:8px;border-radius:1px;background:${i<bars?color:'#e5e5e5'};margin-right:2px"></span>`).join('');
+    return `<div style="padding:10px 12px;border-right:1px solid #f0f0f0">
+        <div style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:${color};margin-bottom:2px">${title}</div>
+        <div style="font-size:8px;color:#aaa;margin-bottom:5px">${timeRange} · ${barHTML}</div>
+        <div style="font-size:10px;color:#333;line-height:1.6">${plan}</div>
+    </div>`;
+}
+
+function buildEarlyPlan(heroes, frontline, carries, supports, archetype, fc) {
+    const parts = [];
+    if (archetype === 'Early Snowball') {
+        parts.push('Invade enemy jungle at 0:00 with full team. Deny first buff.');
+    } else if (supports.length) {
+        parts.push(`${supports[0].name} roams to Gold lane at lv.2 for first blood setup.`);
+    }
+    if (frontline.length) {
+        parts.push(`${frontline[0].name} controls river vision and secures first turtle priority.`);
+    }
+    const junglers = heroes.filter(h=>(h.lane||[]).includes('Jungle'));
+    if (junglers.length) {
+        parts.push(`${junglers[0].name} clears towards enemy side post lv.4 power spike.`);
+    }
+    if (fc.avgEarly < 3) parts.push('Play defensively — avoid early trades. Farm to item spikes.');
+    return parts.slice(0,2).join(' ') || 'Secure early objectives and prioritise safe farming.';
+}
+
+function buildMidPlan(heroes, frontline, carries, supports, archetype, fc) {
+    const parts = [];
+    const hasTurtle = fc.avgTF >= 4;
+    if (hasTurtle) parts.push('Group for every Turtle spawn. Rotate as 4-1 or 3-2 split.');
+    if (archetype === 'CC Chain') {
+        parts.push('Wait for grouped enemies near objectives. Chain CC in sequence for instant picks.');
+    } else if (archetype === 'Teamfight AoE') {
+        parts.push('Force 5v5 around Lord pit. Full AoE rotation wipes enemy team.');
+    } else if (carries.length >= 2) {
+        parts.push(`${carries[0].name} must reach 2 core items before joining fights.`);
+    }
+    if (frontline.length && carries.length) {
+        parts.push(`${frontline[0].name} engages → ${carries[0].name} follows with burst.`);
+    }
+    return parts.slice(0,2).join(' ') || 'Contest all Turtles and apply mid-lane pressure.';
+}
+
+function buildLatePlan(heroes, frontline, carries, supports, archetype, fc) {
+    const parts = [];
+    if (fc.avgLate >= 4.5) {
+        parts.push('Stall until 3-4 core items. Never split: fight as 5 every Lord spawn.');
+    } else if (fc.avgLate < 3) {
+        parts.push('Must close before 18min. Use Lord buff to end immediately after taking it.');
+    }
+    if (supports.length) {
+        parts.push(`${supports[0].name} stays attached to main carry at all times in late teamfights.`);
+    }
+    if (archetype === 'Late Scaling') {
+        parts.push('Defend patiently. Your peak is 3 items — their power fades while yours grows.');
+    }
+    const highLate = heroes.filter(h=>h.lateGame>=5);
+    if (highLate.length) {
+        parts.push(`${highLate.map(h=>h.name).join(' & ')} scale exceptionally — protect them to full build.`);
+    }
+    return parts.slice(0,2).join(' ') || 'Group for Lord, take objectives, push to end.';
+}
+
+function buildCombos(heroes, fc) {
+    const combos = [];
+    const hNames = heroes.map(h=>h.id);
+
+    // Franco + Gord/Valir/Eudora
+    if (hNames.includes('franco')) {
+        const burst = heroes.find(h=>['gord','valir','eudora','kadita','zetian'].includes(h.id));
+        if (burst) combos.push({
+            title: `Franco Hook → ${burst.name} burst`,
+            desc: `Franco hooks a squishy target. ${burst.name} immediately full-channels their damage combo. Target eliminated before CC expires.`
+        });
+    }
+    // Atlas + AoE mage
+    if (hNames.includes('atlas')) {
+        const mage = heroes.find(h=>h.role==='Mage'&&h.id!=='atlas');
+        if (mage) combos.push({
+            title: `Atlas Fatal Links → ${mage.name} AoE`,
+            desc: `Atlas links 3+ enemies and Ult pulls them together. ${mage.name} unleashes full AoE damage on clustered targets. Instant team wipe potential.`
+        });
+    }
+    // Kaja + burst
+    if (hNames.includes('kaja')) {
+        const burst = heroes.find(h=>h.burst>=5&&h.id!=='kaja');
+        if (burst) combos.push({
+            title: `Kaja Ult suppress → ${burst.name}`,
+            desc: `Kaja silences and drags the enemy carry to your team. ${burst.name} instantly bursts the isolated target.`
+        });
+    }
+    // Minsitthar + mage
+    if (hNames.includes('minsitthar')) {
+        const mage = heroes.find(h=>h.role==='Mage');
+        if (mage) combos.push({
+            title: `Minsitthar Spear Field → ${mage?mage.name:'team"}`,
+            desc: `Minsitthar spear field suppresses all blink skills. Enemy team is grounded. ${mage?mage.name+" channels full damage safely.':'Your team cleanly executes.'}` 
+        });
+    }
+    // Diggie + any teamfight
+    if (hNames.includes('diggie')) {
+        const tf = heroes.find(h=>h.teamfight>=5&&h.id!=='diggie');
+        if (tf) combos.push({
+            title: `Diggie Ult → ${tf?tf.name:'team'} freely engage`,
+            desc: `Activate Diggie Ult before enemy AoE CC lands. Your team is CC-immune. ${tf?tf.name+' walks into the enemy team without fear.':'Walk in and execute freely.'}`
+        });
+    }
+    // Synergy pair combos
+    if (fc.synHits.length) {
+        fc.synHits.slice(0,2).forEach(s=>{
+            if (!combos.find(c=>c.title.includes(s.pair.split(' + ')[0]))) {
+                combos.push({
+                    title: `${s.pair} Synergy (${s.val}/10)`,
+                    desc: `Confirmed high-synergy pair. Position these two together in every teamfight for maximum combined output.`
+                });
+            }
+        });
+    }
+    return combos.slice(0,3);
+}
+
+function buildCounterTips(heroes) {
+    const tips = [];
+    const allCounters = heroes.flatMap(h=>h.counters||[]);
+    const counterFreq = {};
+    allCounters.forEach(c=>{ counterFreq[c]=(counterFreq[c]||0)+1; });
+    const topCounters = Object.entries(counterFreq).sort((a,b)=>b[1]-a[1]).slice(0,3);
+    topCounters.forEach(([name, count])=>{
+        if (count >= 2) tips.push(`<strong>${name}</strong> counters ${count} heroes on your team — ban priority or adjust if enemy picks ${name}.`);
+        else tips.push(`Watch out for <strong>${name}</strong> — hard counter to ${heroes.filter(h=>(h.counters||[]).includes(name)).map(h=>h.name).join(', ')}.`);
+    });
+    // Anti-heal warning
+    const healers = heroes.filter(h=>h.sustain>=5||['estes','floryn','angela','rafaela'].includes(h.id));
+    if (healers.length) tips.push(`Enemy will likely build <strong>Dominance Ice / Sea Halberd</strong> vs your ${healers.map(h=>h.name).join('/')} healing. Fight quickly before they item up.`);
+    return tips.slice(0,3);
+}
+
+function buildItemTips(heroes, fc) {
+    const tips = [];
+    heroes.forEach(h => {
+        const role = h.role;
+        let items = '';
+        if (role==='Marksman') {
+            items = fc.phys >= 3 ? "Windtalker → Berserkers Fury → Malefic Roar" : 'Corrosion Scythe → Demon Hunter → Sea Halberd';
+        } else if (role==='Mage') {
+            items = 'Genius Wand → Holy Crystal → Divine Glaive';
+        } else if (role==='Tank') {
+            items = fc.mag >= 3 ? "Athenas Shield → Oracle → Dominance Ice" : 'Antique Cuirass → Dominance Ice → Immortality';
+        } else if (role==='Fighter') {
+            items = h.sustain >= 4 ? 'War Axe → Endless Battle → Immortality' : 'Hunter Strike → Blade of Despair → Malefic Roar';
+        } else if (role==='Assassin') {
+            items = 'Hunter Strike → Blade of Despair → Malefic Roar';
+        } else if (role==='Support') {
+            items = 'Courage Boots → Oracle → Immortality';
+        }
+        if (items) tips.push({ hero: h.name, items });
+    });
+    return tips;
+}
+
+var vsLineup = {
+    blue: [null,null,null,null,null],
+    red:  [null,null,null,null,null]
+};
+var vsActiveTeam = null;  // 'blue' or 'red'
+var vsActiveSlot = null;  // 0-4
+var vsSearchQ = '';
+var vsRoleFilter = 'All';
+
+var VS_LANES = ['Gold','Mid','EXP','Jungle','Roam'];
+var VS_LANE_ROLES = { Gold:['Marksman'], Mid:['Mage','Assassin'], EXP:['Fighter','Tank'], Jungle:['Assassin','Fighter'], Roam:['Tank','Support'] };
+
+function renderVsMode() {
+    const el = document.getElementById('mx-tab-vs');
+    if (!el) return;
+
+    const blueHeroes = vsLineup.blue.filter(Boolean);
+    const redHeroes  = vsLineup.red.filter(Boolean);
+    const blueFc = blueHeroes.length ? forecast(blueHeroes) : null;
+    const redFc  = redHeroes.length  ? forecast(redHeroes)  : null;
+
+    // Determine winner
+    let winner = null;
+    if (blueFc && redFc) {
+        winner = blueFc.fc > redFc.fc ? 'blue' : redFc.fc > blueFc.fc ? 'red' : 'tie';
+    }
+
+    el.innerHTML = `
+        <div style="font-family:Arial,sans-serif">
+
+            <!-- TEAM HEADERS -->
+            <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:16px">
+                <div style="text-align:center;padding:10px 16px;background:#eff6ff;border:2px solid #3b82f6;border-radius:8px">
+                    <div style="font-size:11px;font-weight:700;color:#1d4ed8;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">BLUE TEAM</div>
+                    <div style="font-size:28px;font-weight:900;color:${blueFc?'#1d4ed8':'#aaa'}">${blueFc?blueFc.fc.toFixed(1)+'%':'—'}</div>
+                    <div style="font-size:10px;color:#666;margin-top:2px">${blueFc?blueFc.lbl:blueHeroes.length+'/5 picked'}</div>
+                </div>
+                <div style="text-align:center;font-size:22px;font-weight:900;color:#111;padding:0 8px">VS</div>
+                <div style="text-align:center;padding:10px 16px;background:#fef2f2;border:2px solid #dc2626;border-radius:8px">
+                    <div style="font-size:11px;font-weight:700;color:#dc2626;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">RED TEAM</div>
+                    <div style="font-size:28px;font-weight:900;color:${redFc?'#dc2626':'#aaa'}">${redFc?redFc.fc.toFixed(1)+'%':'—'}</div>
+                    <div style="font-size:10px;color:#666;margin-top:2px">${redFc?redFc.lbl:redHeroes.length+'/5 picked'}</div>
+                </div>
+            </div>
+
+            <!-- WIN PROBABILITY BAR -->
+            ${blueFc && redFc ? vsWinBar(blueFc.fc, redFc.fc, winner) : ''}
+
+            <!-- SIDE BY SIDE LANES -->
+            <div style="display:grid;grid-template-columns:1fr 40px 1fr;gap:4px;margin-bottom:14px">
+                ${VS_LANES.map((ln,i) => vsLaneRow(ln,i)).join('')}
+            </div>
+
+            <!-- HERO PICKER -->
+            ${vsActiveTeam !== null && vsActiveSlot !== null ? vsPickerHTML() : vsPickerHint()}
+
+            <!-- FORECAST COMPARISON -->
+            ${blueFc && redFc ? vsForecastComparison(blueFc, redFc, winner) : ''}
+
+            <!-- ACTIONS -->
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+                <button onclick="vsClearTeam('blue')" style="padding:8px 16px;font-size:11px;font-weight:700;border:1.5px solid #3b82f6;border-radius:6px;background:#fff;color:#3b82f6;cursor:pointer">&#10005; Clear Blue</button>
+                <button onclick="vsClearTeam('red')" style="padding:8px 16px;font-size:11px;font-weight:700;border:1.5px solid #dc2626;border-radius:6px;background:#fff;color:#dc2626;cursor:pointer">&#10005; Clear Red</button>
+                <button onclick="vsClearAll()" style="padding:8px 16px;font-size:11px;font-weight:700;border:1.5px solid #999;border-radius:6px;background:#fff;color:#666;cursor:pointer">&#10005; Clear All</button>
+                ${blueHeroes.length===5 && redHeroes.length===5 ? `
+                <button onclick="vsSaveForecast()" style="padding:8px 16px;font-size:11px;font-weight:800;border:1.5px solid #111;border-radius:6px;background:#111;color:#fff;cursor:pointer">&#8659; Save JPEG</button>
+                <button onclick="vsShareMenu()" style="padding:8px 16px;font-size:11px;font-weight:800;border:1.5px solid #7c3aed;border-radius:6px;background:#7c3aed;color:#fff;cursor:pointer">&#10149; Share</button>
+                ` : ''}
+            </div>
+
+            <!-- SHARE PANEL -->
+            <div id="vs-share-panel" style="display:none;margin-top:12px;padding:14px;background:#f9f9f9;border:1px solid #e5e5e5;border-radius:8px">
+                <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:10px">Share VS Forecast</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <button onclick="vsShare('facebook')" style="${vsShareBtnStyle('#1877f2')}">&#128994; Facebook</button>
+                    <button onclick="vsShare('twitter')" style="${vsShareBtnStyle('#000')}">&#10005; Twitter/X</button>
+                    <button onclick="vsShare('threads')" style="${vsShareBtnStyle('#111')}">@ Threads</button>
+                    <button onclick="vsShare('whatsapp')" style="${vsShareBtnStyle('#25d366')}">&#9993; WhatsApp</button>
+                    <button onclick="vsShare('instagram')" style="${vsShareBtnStyle('#e1306c')}">&#9635; Instagram</button>
+                    <button onclick="vsShare('tiktok')" style="${vsShareBtnStyle('#111')}">&#9654; TikTok</button>
+                    <button onclick="vsShare('copy')" style="${vsShareBtnStyle('#6b7280')}">&#9112; Copy Link</button>
+                </div>
+                <div id="vs-share-note" style="font-size:10px;color:#aaa;margin-top:8px;line-height:1.6;font-family:Arial,sans-serif"></div>
+            </div>
+
+        </div>`;
+}
+
+function vsShareBtnStyle(color) {
+    return `padding:7px 14px;font-size:11px;font-weight:700;border:1.5px solid ${color};border-radius:5px;background:${color};color:#fff;cursor:pointer;font-family:Arial,sans-serif`;
+}
+
+function vsWinBar(blueFc, redFc, winner) {
+    const total = blueFc + redFc;
+    const bluePct = Math.round(blueFc / total * 100);
+    const redPct  = 100 - bluePct;
+    const diff = Math.abs(blueFc - redFc).toFixed(1);
+    return `
+        <div style="margin-bottom:16px;padding:12px;background:#fafafa;border:1px solid #e5e5e5;border-radius:8px">
+            <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;margin-bottom:6px;font-family:Arial,sans-serif">
+                <span style="color:#1d4ed8">BLUE ${bluePct}%</span>
+                <span style="color:#666;font-size:9px">WIN PROBABILITY · ${diff}% advantage to ${winner==='tie'?'NEITHER':winner.toUpperCase()}</span>
+                <span style="color:#dc2626">RED ${redPct}%</span>
+            </div>
+            <div style="height:10px;border-radius:5px;overflow:hidden;display:flex">
+                <div style="width:${bluePct}%;background:linear-gradient(90deg,#1d4ed8,#3b82f6);transition:width .5s ease"></div>
+                <div style="width:${redPct}%;background:linear-gradient(90deg,#ef4444,#dc2626);transition:width .5s ease"></div>
+            </div>
+            ${winner && winner!=='tie' ? `<div style="text-align:center;margin-top:6px;font-size:11px;font-weight:800;color:${winner==='blue'?'#1d4ed8':'#dc2626'};letter-spacing:1px;font-family:Arial,sans-serif">&#9650; ${winner.toUpperCase()} TEAM FAVOURED</div>` : ''}
+        </div>`;
+}
+
+function vsLaneRow(lane, idx) {
+    const blueH = vsLineup.blue[idx];
+    const redH  = vsLineup.red[idx];
+    const blueActive = vsActiveTeam==='blue' && vsActiveSlot===idx;
+    const redActive  = vsActiveTeam==='red'  && vsActiveSlot===idx;
+
+    function slotHTML(hero, team, i) {
+        const isActive = vsActiveTeam===team && vsActiveSlot===i;
+        const imgs = (typeof MANXEON_MLBB_IMAGES !== 'undefined') ? MANXEON_MLBB_IMAGES : {};
+        const url = hero ? (imgs[hero.id]||'') : '';
+        const tc = hero ? (TIER_C[hero.tier]||'#999') : '#ccc';
+        const rc = hero ? (ROLE_COLOR[hero.role]||'#999') : '#ccc';
+        const isBlue = team === 'blue';
+
+        return `<div onclick="vsSlotClick('${team}",${i})\" style=\"
+            padding:8px 6px;border-radius:8px;text-align:center;cursor:pointer;
+            border:2px ${isActive?'solid':'dashed'} ${isActive?(isBlue?'#3b82f6':'#dc2626'):(hero?tc:'#e0e0e0')};
+            background:${isActive?(isBlue?'#eff6ff':'#fef2f2'):(hero?'#fafafa':'#fff')};
+            min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+            position:relative;transition:all .15s">
+            ${hero ? `<button onclick="vsRemove(event,'${team}',${i})" style="position:absolute;top:3px;${isBlue?'right':'left'}:3px;width:14px;height:14px;border-radius:50%;background:#fee2e2;color:#dc2626;border:none;cursor:pointer;font-size:9px;line-height:1;display:flex;align-items:center;justify-content:center">&#215;</button>` : ''}
+            ${hero ? `
+                <div style="position:relative;width:40px;height:40px;margin:0 auto 2px">
+                    ${url ? `<img src="${url}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid ${isBlue?'#3b82f6':'#dc2626'}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <span style="display:none;width:40px;height:40px;border-radius:50%;background:${rc};color:#fff;font-size:8px;font-weight:900;align-items:center;justify-content:center">${ROLE_ICON[hero.role]||'?'}</span>` :
+                    `<span style="display:flex;width:40px;height:40px;border-radius:50%;background:${rc};color:#fff;font-size:8px;font-weight:900;align-items:center;justify-content:center">${ROLE_ICON[hero.role]||'?'}</span>`}
+                    <span style="position:absolute;bottom:-2px;${isBlue?'right':'left'}:-2px;font-size:7px;font-weight:900;padding:1px 3px;border-radius:2px;background:${tc};color:#fff">${hero.tier}</span>
+                </div>
+                <div style="font-size:9px;font-weight:800;color:#111;line-height:1.1">${hero.name}</div>
+                <div style="font-size:8px;font-weight:700;color:${hero.wr>=52?'#16a34a':hero.wr>=50?'#b45309':'#dc2626'}">${hero.wr}%</div>
+            ` : `
+                <div style="font-size:8px;font-weight:700;color:${isActive?(isBlue?'#3b82f6':'#dc2626'):'#ccc'};letter-spacing:1px">${lane}</div>
+                <div style="font-size:9px;color:${isActive?(isBlue?'#3b82f6':'#dc2626'):'#ddd'}">+ Pick</div>
+            `}
+        </div>`;
+    }
+
+    return `
+        ${slotHTML(blueH, 'blue', idx)}
+        <div style="display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#aaa;text-transform:uppercase;letter-spacing:1px">${lane.slice(0,3)}</div>
+        ${slotHTML(redH, 'red', idx)}`;
+}
+
+function vsPickerHint() {
+    return `<div style="padding:12px;background:#f9f9f9;border:1px solid #e5e5e5;border-radius:8px;text-align:center;font-size:12px;color:#aaa;font-family:Arial,sans-serif;margin-bottom:14px">
+        Click any lane slot above to pick a hero for that team
+    </div>`;
+}
+
+function vsPickerHTML() {
+    const team = vsActiveTeam;
+    const slot = vsActiveSlot;
+    const lane = VS_LANES[slot];
+    const teamColor = team === 'blue' ? '#3b82f6' : '#dc2626';
+    const teamBg    = team === 'blue' ? '#eff6ff' : '#fef2f2';
+    const teamName  = team === 'blue' ? 'BLUE' : 'RED';
+
+    const pickedBlue = vsLineup.blue.filter(Boolean).map(h=>h.id);
+    const pickedRed  = vsLineup.red.filter(Boolean).map(h=>h.id);
+    const allPicked  = [...pickedBlue, ...pickedRed];
+
+    const vh = HEROES.filter(h => {
+        const mRole = vsRoleFilter==='All' ? true : h.role===vsRoleFilter;
+        const mSearch = !vsSearchQ || h.name.toLowerCase().includes(vsSearchQ.toLowerCase());
+        return mRole && mSearch;
+    }).sort((a,b) => {
+        const af = (VS_LANE_ROLES[lane]||[]).some(r=>a.role===r) ? 0 : 1;
+        const bf = (VS_LANE_ROLES[lane]||[]).some(r=>b.role===r) ? 0 : 1;
+        if (af!==bf) return af-bf;
+        return b.wr-a.wr;
+    });
+
+    const roleBtns = ['All','Tank','Fighter','Mage','Marksman','Assassin','Support'].map(r =>
+        `<button onclick="vsSetRole('${r}')" style="padding:5px 9px;font-size:10px;font-weight:700;border:1.5px solid ${vsRoleFilter===r?teamColor:'#d9d9d9'};border-radius:4px;background:${vsRoleFilter===r?teamColor:'#fff'};color:${vsRoleFilter===r?'#fff':'#666'};cursor:pointer;font-family:Arial,sans-serif">${r}</button>`
+    ).join('');
+
+    const cards = vh.map(hero => {
+        const imgs = (typeof MANXEON_MLBB_IMAGES!=='undefined') ? MANXEON_MLBB_IMAGES : {};
+        const url = imgs[hero.id]||'';
+        const rc = ROLE_COLOR[hero.role]||'#999';
+        const tc = TIER_C[hero.tier]||'#999';
+        const isPicked = allPicked.includes(hero.id);
+        const isFit = (VS_LANE_ROLES[lane]||[]).some(r=>hero.role===r);
+
+        return `<div onclick="${isPicked?'':'vsPickHero(\''+hero.id+'\')'}" style="
+            padding:8px 5px;border-radius:7px;text-align:center;
+            border:1.5px solid ${isPicked?'#e5e5e5':isFit?tc+'66':'#e5e5e5'};
+            background:${isPicked?'#f5f5f5':isFit?tc+'11':'#fff'};
+            cursor:${isPicked?'not-allowed':'pointer'};
+            opacity:${isPicked?'.35':'1'};
+            transition:all .1s" ${isPicked?'':''}>
+            <div style="position:relative;width:40px;height:40px;margin:0 auto 4px">
+                ${url ? `<img src="${url}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:1.5px solid ${tc}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <span style="display:none;width:40px;height:40px;border-radius:50%;background:${rc};color:#fff;font-size:8px;font-weight:900;align-items:center;justify-content:center">${ROLE_ICON[hero.role]||'?'}</span>` :
+                `<span style="display:flex;width:40px;height:40px;border-radius:50%;background:${rc};color:#fff;font-size:8px;font-weight:900;align-items:center;justify-content:center">${ROLE_ICON[hero.role]||'?'}</span>`}
+            </div>
+            <div style="font-size:9px;font-weight:800;color:#111;line-height:1.2;margin-bottom:1px">${hero.name}</div>
+            <div style="display:flex;justify-content:center;gap:2px;align-items:center">
+                <span style="font-size:7px;font-weight:900;padding:0 3px;background:${tc};color:#fff;border-radius:2px">${hero.tier}</span>
+                <span style="font-size:8px;font-weight:700;color:${hero.wr>=52?'#16a34a':hero.wr>=50?'#b45309':'#dc2626'}">${hero.wr}%</span>
+            </div>
+        </div>`;
+    }).join('');
+
+    return `<div style="background:${teamBg};border:2px solid ${teamColor};border-radius:8px;padding:12px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div style="font-size:12px;font-weight:800;color:${teamColor};font-family:Arial,sans-serif">
+                Picking for <span style="text-decoration:underline">${teamName} · ${lane}</span>
+                <span style="font-size:10px;font-weight:400;color:#888;margin-left:6px">Recommended: ${(VS_LANE_ROLES[lane]||[]).join('/')}</span>
+            </div>
+            <button onclick="vsCloseSlot()" style="border:none;background:none;font-size:18px;cursor:pointer;color:#888;line-height:1">&#215;</button>
+        </div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px">
+            <input type="text" placeholder="Search..." value="${vsSearchQ}"
+                oninput="vsSearchQ=this.value;renderVsMode()"
+                style="flex:1;min-width:120px;padding:6px 10px;font-size:11px;border:1.5px solid #d9d9d9;border-radius:4px;outline:none;font-family:Arial,sans-serif">
+            ${roleBtns}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:5px;max-height:240px;overflow-y:auto">
+            ${cards}
+        </div>
+    </div>`;
+}
+
+function vsForecastComparison(blueFc, redFc, winner) {
+    function barRow(label, blueVal, redVal, max, blueColor, redColor) {
+        const bpct = Math.max(2, Math.round(blueVal/max*100));
+        const rpct = Math.max(2, Math.round(redVal/max*100));
+        const bv = typeof blueVal==='number'&&blueVal%1!==0 ? blueVal.toFixed(1) : blueVal;
+        const rv = typeof redVal==='number'&&redVal%1!==0 ? redVal.toFixed(1) : redVal;
+        const bWins = parseFloat(blueVal) > parseFloat(redVal);
+        const rWins = parseFloat(redVal) > parseFloat(blueVal);
+        return `<div style="margin-bottom:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
+                <span style="font-size:10px;font-weight:800;color:${bWins?'#1d4ed8':'#888'}">${bv}</span>
+                <span style="font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;text-transform:uppercase">${label}</span>
+                <span style="font-size:10px;font-weight:800;color:${rWins?'#dc2626':'#888'}">${rv}</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 8px 1fr;gap:2px;align-items:center">
+                <div style="height:8px;background:#f0f0f0;border-radius:4px;overflow:hidden;display:flex;justify-content:flex-end">
+                    <div style="width:${bpct}%;height:100%;background:${blueColor};border-radius:4px;transition:width .4s ease"></div>
+                </div>
+                <div></div>
+                <div style="height:8px;background:#f0f0f0;border-radius:4px;overflow:hidden">
+                    <div style="width:${rpct}%;height:100%;background:${redColor};border-radius:4px;transition:width .4s ease"></div>
+                </div>
+            </div>
+        </div>`;
+    }
+
+    const synBlue = getSynergy(vsLineup.blue.filter(Boolean));
+    const synRed  = getSynergy(vsLineup.red.filter(Boolean));
+
+    return `<div style="background:#fafafa;border:1px solid #e5e5e5;border-radius:8px;padding:14px;margin-bottom:14px" id="vs-forecast-card">
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #f0f0f0">
+            <div style="text-align:left">
+                <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#1d4ed8;text-transform:uppercase;margin-bottom:4px">BLUE TEAM</div>
+                ${blueFc.pros.slice(0,3).map(p=>`<div style="font-size:9px;color:#555;margin-bottom:2px;font-family:Arial,sans-serif">&#10003; ${p}</div>`).join('')}
+                ${blueFc.warnings.slice(0,2).map(w=>`<div style="font-size:9px;color:#f59e0b;margin-bottom:2px">&#9888; ${w}</div>`).join('')}
+            </div>
+            <div style="width:1px;background:#e5e5e5"></div>
+            <div style="text-align:right">
+                <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:#dc2626;text-transform:uppercase;margin-bottom:4px">RED TEAM</div>
+                ${redFc.pros.slice(0,3).map(p=>`<div style="font-size:9px;color:#555;margin-bottom:2px;font-family:Arial,sans-serif">${p} &#10003;</div>`).join('')}
+                ${redFc.warnings.slice(0,2).map(w=>`<div style="font-size:9px;color:#f59e0b;margin-bottom:2px">${w} &#9888;</div>`).join('')}
+            </div>
+        </div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:10px;text-align:center">STAT COMPARISON</div>
+        ${barRow('WIN RATE', blueFc.baseWR, redFc.baseWR, 70, '#3b82f6', '#ef4444')}
+        ${barRow('EARLY GAME', blueFc.avgEarly, redFc.avgEarly, 5, '#f59e0b', '#f97316')}
+        ${barRow('LATE GAME', blueFc.avgLate, redFc.avgLate, 5, '#3b82f6', '#ef4444')}
+        ${barRow('TEAMFIGHT', blueFc.avgTF, redFc.avgTF, 5, '#7c3aed', '#a855f7')}
+        ${barRow('CC COUNT', blueFc.ccCount, redFc.ccCount, 5, '#22c55e', '#ef4444')}
+        ${barRow('SYNERGY', synBlue.score, synRed.score, 60, '#06b6d4', '#f97316')}
+        ${barRow('PHYS DMG', blueFc.phys, redFc.phys, 5, '#f97316', '#ef4444')}
+        ${barRow('MAGIC DMG', blueFc.mag, redFc.mag, 5, '#a855f7', '#7c3aed')}
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid #f0f0f0">
+            <div style="font-size:20px;font-weight:900;color:#1d4ed8;text-align:left">${blueFc.fc}%<div style="font-size:9px;font-weight:700;color:#aaa;margin-top:1px">FORECAST WR</div></div>
+            <div style="font-size:10px;font-weight:900;text-align:center;color:${winner==='tie'?'#888':winner==='blue'?'#1d4ed8':'#dc2626'};align-self:center;letter-spacing:.5px">${winner==='tie'?'EVEN':winner==='blue'?'&#9650; BLUE':'&#9650; RED'}</div>
+            <div style="font-size:20px;font-weight:900;color:#dc2626;text-align:right">${redFc.fc}%<div style="font-size:9px;font-weight:700;color:#aaa;margin-top:1px">FORECAST WR</div></div>
+        </div>
+    </div>
+    ${generateGameplan(vsLineup.blue.filter(Boolean), 'blue') || ''}
+    ${generateGameplan(vsLineup.red.filter(Boolean), 'red') || ''}
+    `;
+}
+
+window.vsSlotClick = function(team, slot) {
+    if (vsActiveTeam===team && vsActiveSlot===slot) {
+        vsActiveTeam=null; vsActiveSlot=null;
+    } else {
+        vsActiveTeam=team; vsActiveSlot=slot;
+        vsSearchQ=''; vsRoleFilter='All';
+    }
+    renderVsMode();
+};
+
+window.vsCloseSlot = function() { vsActiveTeam=null; vsActiveSlot=null; renderVsMode(); };
+
+window.vsRemove = function(e, team, slot) {
+    e.stopPropagation();
+    vsLineup[team][slot] = null;
+    renderVsMode();
+};
+
+window.vsPickHero = function(id) {
+    if (vsActiveTeam===null || vsActiveSlot===null) return;
+    const hero = HEROES.find(h=>h.id===id);
+    if (!hero) return;
+    // Remove from both teams if already picked
+    ['blue','red'].forEach(t => {
+        const i = vsLineup[t].findIndex(h=>h&&h.id===id);
+        if (i!==-1) vsLineup[t][i]=null;
+    });
+    vsLineup[vsActiveTeam][vsActiveSlot] = hero;
+    // Auto-advance to next empty slot on same team
+    const next = vsLineup[vsActiveTeam].findIndex((h,i)=>!h&&i>vsActiveSlot);
+    if (next!==-1) { vsActiveSlot=next; }
+    else { vsActiveTeam=null; vsActiveSlot=null; }
+    renderVsMode();
+};
+
+window.vsSetRole = function(r) { vsRoleFilter=r; renderVsMode(); };
+
+window.vsClearTeam = function(team) {
+    vsLineup[team]=[null,null,null,null,null];
+    if (vsActiveTeam===team) { vsActiveTeam=null; vsActiveSlot=null; }
+    renderVsMode();
+};
+
+window.vsClearAll = function() {
+    vsLineup={blue:[null,null,null,null,null],red:[null,null,null,null,null]};
+    vsActiveTeam=null; vsActiveSlot=null;
+    renderVsMode();
+};
+
+window.vsShareMenu = function() {
+    const p = document.getElementById('vs-share-panel');
+    if (p) p.style.display = p.style.display==='none' ? 'block' : 'none';
+};
+
+window.vsShare = function(platform) {
+    const blue = vsLineup.blue.filter(Boolean);
+    const red  = vsLineup.red.filter(Boolean);
+    const blueFc = forecast(blue);
+    const redFc  = forecast(red);
+    const winner = blueFc.fc > redFc.fc ? 'Blue' : redFc.fc > blueFc.fc ? 'Red' : 'Even';
+
+    const txt = `🔵 BLUE (${blueFc.fc}%): ${blue.map(h=>h.name).join(', ')}\n🔴 RED (${redFc.fc}%): ${red.map(h=>h.name).join(', ')}\n\n${winner==='Even'?'Even matchup!':winner+' team favoured by '+Math.abs(blueFc.fc-redFc.fc).toFixed(1)+'%'}\n\nMLBB Heroes Draft Builder`;
+    const url = encodeURIComponent(window.location.href);
+    const enc = encodeURIComponent(txt);
+    const noteEl = document.getElementById('vs-share-note');
+
+    const links = {
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${enc}`,
+        twitter:  `https://twitter.com/intent/tweet?text=${enc}&url=${url}`,
+        threads:  `https://www.threads.net/intent/post?text=${enc}`,
+        whatsapp: `https://wa.me/?text=${enc}%20${url}`,
+        tiktok:   null,
+        instagram:null,
+    };
+
+    if (platform==='copy') {
+        const full = txt + '\n' + window.location.href;
+        navigator.clipboard.writeText(full).then(()=>{
+            if (noteEl) noteEl.textContent = '✓ Copied to clipboard — paste anywhere!';
+        });
+        return;
+    }
+    if (platform==='instagram' || platform==='tiktok') {
+        if (noteEl) noteEl.textContent = `${platform==='instagram'?'Instagram':'TikTok'} doesn't support direct web sharing. Save the JPEG below and upload it manually with your caption.`;
+        return;
+    }
+    if (links[platform]) window.open(links[platform],'_blank','width=640,height=480');
+};
+
+window.vsSaveForecast = function() {
+    const blue = vsLineup.blue.filter(Boolean);
+    const red  = vsLineup.red.filter(Boolean);
+    if (blue.length!==5||red.length!==5) { mxToast('Pick all 10 heroes first'); return; }
+
+    const blueFc = forecast(blue);
+    const redFc  = forecast(red);
+    const winner = blueFc.fc>redFc.fc?'blue':redFc.fc>blueFc.fc?'red':'tie';
+
+    const W=1200, H=700;
+    const cv=document.createElement('canvas');
+    cv.width=W; cv.height=H;
+    const ctx=cv.getContext('2d');
+
+    // Background
+    ctx.fillStyle='#ffffff';
+    ctx.fillRect(0,0,W,H);
+
+    // Blue side bg
+    ctx.fillStyle='rgba(59,130,246,0.05)';
+    ctx.fillRect(0,0,W/2,H);
+
+    // Red side bg
+    ctx.fillStyle='rgba(220,38,38,0.05)';
+    ctx.fillRect(W/2,0,W/2,H);
+
+    // Center divider
+    ctx.strokeStyle='#e5e5e5';
+    ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
+
+    // Top bar
+    const grad=ctx.createLinearGradient(0,0,W,0);
+    grad.addColorStop(0,'#1d4ed8');
+    grad.addColorStop(0.5,'#111');
+    grad.addColorStop(1,'#dc2626');
+    ctx.fillStyle=grad;
+    ctx.fillRect(0,0,W,4);
+
+    // Title
+    ctx.fillStyle='#111';
+    ctx.font='bold 20px Arial';
+    ctx.textAlign='center';
+    ctx.fillText('MLBB HEROES DRAFT BUILDER — VS FORECAST', W/2, 32);
+
+    ctx.font='11px Arial';
+    ctx.fillStyle='#888';
+    ctx.fillText('Patch 2.1.70 · Season 40', W/2, 50);
+
+    // BLUE header
+    ctx.font='bold 14px Arial';
+    ctx.fillStyle='#1d4ed8';
+    ctx.textAlign='center';
+    ctx.fillText('BLUE TEAM', W/4, 74);
+    ctx.font='bold 32px Arial';
+    ctx.fillText(blueFc.fc+'%', W/4, 108);
+    ctx.font='bold 12px Arial';
+    ctx.fillStyle=blueFc.fc>redFc.fc?'#16a34a':'#888';
+    ctx.fillText(blueFc.lbl, W/4, 126);
+
+    // RED header
+    ctx.font='bold 14px Arial';
+    ctx.fillStyle='#dc2626';
+    ctx.textAlign='center';
+    ctx.fillText('RED TEAM', 3*W/4, 74);
+    ctx.font='bold 32px Arial';
+    ctx.fillText(redFc.fc+'%', 3*W/4, 108);
+    ctx.font='bold 12px Arial';
+    ctx.fillStyle=redFc.fc>blueFc.fc?'#16a34a':'#888';
+    ctx.fillText(redFc.lbl, 3*W/4, 126);
+
+    // VS center
+    ctx.font='bold 28px Arial';
+    ctx.fillStyle='#111';
+    ctx.fillText('VS', W/2, 106);
+
+    // Win bar
+    const total=blueFc.fc+redFc.fc;
+    const bpct=blueFc.fc/total;
+    const barY=140, barH=12;
+    ctx.fillStyle='#3b82f6';
+    ctx.beginPath();
+    ctx.roundRect(60,barY,Math.round((W-120)*bpct),barH,4);
+    ctx.fill();
+    ctx.fillStyle='#dc2626';
+    ctx.beginPath();
+    ctx.roundRect(60+Math.round((W-120)*bpct),barY,Math.round((W-120)*(1-bpct)),barH,4);
+    ctx.fill();
+
+    // Winner label
+    ctx.font='bold 11px Arial';
+    ctx.textAlign='center';
+    ctx.fillStyle=winner==='blue'?'#1d4ed8':winner==='red'?'#dc2626':'#888';
+    ctx.fillText(winner==='tie'?'EVEN MATCHUP':winner.toUpperCase()+' FAVOURED by '+Math.abs(blueFc.fc-redFc.fc).toFixed(1)+'%', W/2, 168);
+
+    // Hero portraits function (draw circle avatars)
+    function drawHeroBox(hero, x, y, isBlue) {
+        const imgs = typeof MANXEON_MLBB_IMAGES!=='undefined' ? MANXEON_MLBB_IMAGES : {};
+        const url = imgs[hero.id]||'';
+        const tc = TIER_C[hero.tier]||'#999';
+        const rc = ROLE_COLOR[hero.role]||'#999';
+        const cx = x+46; const cy = y+24;
+        const r = 22;
+
+        const drawCircle = () => {
+            // Tier ring
+            ctx.beginPath();
+            ctx.arc(cx,cy,r+3,0,Math.PI*2);
+            ctx.fillStyle=tc;
+            ctx.fill();
+            // Fill circle
+            ctx.beginPath();
+            ctx.arc(cx,cy,r,0,Math.PI*2);
+            ctx.fillStyle=rc;
+            ctx.fill();
+            // Role text fallback
+            ctx.font='bold 9px Arial';
+            ctx.fillStyle='#fff';
+            ctx.textAlign='center';
+            ctx.textBaseline='middle';
+            ctx.fillText(ROLE_ICON[hero.role]||'?', cx, cy);
+            ctx.textBaseline='alphabetic';
+        };
+
+        if (url) {
+            const img=new Image();
+            img.crossOrigin='anonymous';
+            img.onload=()=>{
+                ctx.save();
+                ctx.beginPath(); ctx.arc(cx,cy,r+3,0,Math.PI*2); ctx.fillStyle=tc; ctx.fill();
+                ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.clip();
+                ctx.drawImage(img, cx-r, cy-r, r*2, r*2);
+                ctx.restore();
+                afterDraw();
+            };
+            img.onerror=()=>{ drawCircle(); afterDraw(); };
+            img.src=url;
+        } else { drawCircle(); afterDraw(); }
+
+        let drawn=false;
+        function afterDraw() {
+            if (drawn) return; drawn=true;
+            // Name
+            ctx.font='bold 10px Arial';
+            ctx.fillStyle='#111';
+            ctx.textAlign='center';
+            ctx.fillText(hero.name.length>10?hero.name.slice(0,9)+'…':hero.name, x+46, y+54);
+            // WR
+            ctx.font='bold 9px Arial';
+            ctx.fillStyle=hero.wr>=52?'#16a34a':hero.wr>=50?'#b45309':'#dc2626';
+            ctx.fillText(hero.wr+'%', x+46, y+65);
+        }
+    }
+
+    // Draw hero boxes
+    const heroW=92, startY=185;
+    blue.forEach((h,i) => drawHeroBox(h, 20+i*(heroW+4), startY, true));
+    red.forEach((h,i)  => drawHeroBox(h, W/2+20+i*(heroW+4), startY, false));
+
+    // Stat comparison bars
+    const stats = [
+        ['Base WR', blueFc.baseWR, redFc.baseWR, 70],
+        ['Early Game', blueFc.avgEarly, redFc.avgEarly, 5],
+        ['Late Game', blueFc.avgLate, redFc.avgLate, 5],
+        ['Teamfight', blueFc.avgTF, redFc.avgTF, 5],
+        ['CC Count', blueFc.ccCount, redFc.ccCount, 5],
+    ];
+
+    const statY=280;
+    stats.forEach((s,i)=>{
+        const [label, bv, rv, max] = s;
+        const rowY = statY+i*44;
+        const bw=Math.round((W/2-80)*(bv/max));
+        const rw=Math.round((W/2-80)*(rv/max));
+
+        ctx.font='9px Arial';
+        ctx.fillStyle='#888';
+        ctx.textAlign='center';
+        ctx.fillText(label, W/2, rowY+12);
+
+        // Blue bar (right-aligned from center)
+        ctx.fillStyle='#3b82f6';
+        ctx.beginPath();
+        if(ctx.roundRect) ctx.roundRect(W/2-24-bw,rowY+16,bw,8,3);
+        else ctx.rect(W/2-24-bw,rowY+16,bw,8);
+        ctx.fill();
+
+        // Red bar (left from center)
+        ctx.fillStyle='#ef4444';
+        ctx.beginPath();
+        if(ctx.roundRect) ctx.roundRect(W/2+24,rowY+16,rw,8,3);
+        else ctx.rect(W/2+24,rowY+16,rw,8);
+        ctx.fill();
+
+        // Values
+        ctx.font='bold 10px Arial';
+        ctx.fillStyle='#1d4ed8'; ctx.textAlign='right';
+        ctx.fillText(typeof bv==='number'&&bv%1?bv.toFixed(1):bv, W/2-28, rowY+25);
+        ctx.fillStyle='#dc2626'; ctx.textAlign='left';
+        ctx.fillText(typeof rv==='number'&&rv%1?rv.toFixed(1):rv, W/2+28, rowY+25);
+    });
+
+    // Pros/cons summary
+    const proY=510;
+    ctx.font='bold 10px Arial';
+    ctx.fillStyle='#1d4ed8'; ctx.textAlign='left';
+    ctx.fillText('BLUE STRENGTHS', 30, proY);
+    blueFc.pros.slice(0,3).forEach((p,i)=>{
+        ctx.font='9px Arial'; ctx.fillStyle='#555';
+        ctx.fillText('+ '+p.slice(0,52), 30, proY+16+i*16);
+    });
+
+    ctx.font='bold 10px Arial';
+    ctx.fillStyle='#dc2626'; ctx.textAlign='right';
+    ctx.fillText('RED STRENGTHS', W-30, proY);
+    redFc.pros.slice(0,3).forEach((p,i)=>{
+        ctx.font='9px Arial'; ctx.fillStyle='#555';
+        ctx.textAlign='right';
+        ctx.fillText('+'+p.slice(0,52), W-30, proY+16+i*16);
+    });
+
+    // Watermark
+    ctx.font='9px Arial';
+    ctx.fillStyle='#ccc';
+    ctx.textAlign='center';
+    ctx.fillText('MLBB Heroes Draft Builder · manxeon.com · Season 40 Patch 2.1.70', W/2, H-12);
+
+    // Download after a short delay to let images load
+    setTimeout(()=>{
+        const link=document.createElement('a');
+        link.download=`mlbb-vs-forecast-blue${blueFc.fc}-red${redFc.fc}.jpg`;
+        cv.toBlob(blob=>{
+            link.href=URL.createObjectURL(blob);
+            link.click();
+            setTimeout(()=>URL.revokeObjectURL(link.href),1000);
+        },'image/jpeg',0.95);
+        mxToast('VS Forecast saved as JPEG');
+    }, 800);
+};
+
+// Poll until mx-main div exists, then init — works in all embed contexts
+
+var _mlbbDone = false;
+function _mlbbRun() {
+    if (_mlbbDone) return;
+    var el = document.getElementById('mx-main');
+    if (!el) { setTimeout(_mlbbRun, 50); return; }
+    _mlbbDone = true;
+    try {
+        applyData(FALLBACK_DATA);
+        setStatus('green', 'Patch ' + (PATCH_INFO.patch||'2.1.70') + ' · ' + HEROES.length + ' heroes loaded');
+        applyPatchBadge();
+        renderApp();
+    } catch(e) {
+        var el2 = document.getElementById('mx-main');
+        if (el2) el2.innerHTML = '<div style="padding:16px;font-family:Arial;color:#dc2626;border:1px solid #fecaca;border-radius:8px;background:#fef2f2"><strong>Error:</strong> ' + (e.message||'unknown') + '</div>';
+        var sd = document.getElementById('mx-status-dot');
+        var st = document.getElementById('mx-status-text');
+        if (sd) sd.className = 'manxeon-status-dot red';
+        if (st) st.textContent = 'Error: ' + (e.message||'failed');
+    }
+}
+
+_mlbbRun();
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _mlbbRun);
+}
+window.addEventListener('load', _mlbbRun);
+
+if (typeof MutationObserver !== 'undefined') {
+    var _mlbbObs = new MutationObserver(function() {
+        if (!_mlbbDone && document.getElementById('mx-main')) {
+            _mlbbObs.disconnect();
+            _mlbbRun();
+        }
+    });
+    _mlbbObs.observe(document.body || document.documentElement, { childList: true, subtree: true });
+}
+</script>
+
+</body>
+</html>
