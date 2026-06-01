@@ -648,16 +648,16 @@ function forecast(heroes) {
     if(!hasFront)  warnings.push('No frontline — fragile vs dive compositions');
     if(!hasCarry)  warnings.push('No damage carry — cannot close out games');
     if(!hasS)      warnings.push('No support — zero sustain or peel');
-    if(phys>=4)    warnings.push("4+ physical heroes — enemy stacks Antique Cuirass easily\");
-    if(mag>=4)     warnings.push(\"4+ magic heroes — enemy stacks Athena's Shield easily\");
-    if(ccCount===0) warnings.push(\"Zero CC — cannot lock down enemy carries");
+    if(phys>=4)    warnings.push('4+ physical heroes — enemy stacks Antique Cuirass easily');
+    if(mag>=4)     warnings.push('4+ magic heroes — enemy stacks Athena Shield easily');
+    if(ccCount===0) warnings.push('Zero CC — cannot lock down enemy carries');
     const weakHeroes = heroes.filter(h=>h.wr<46);
     if(weakHeroes.length) warnings.push('Below meta WR: '+weakHeroes.map(h=>`${h.name}(${h.wr}%)`).join(', '));
 
-    if(hasFront)         pros.push('Frontline present — can initiate and absorb damage");
+    if(hasFront)         pros.push('Frontline present — can initiate and absorb damage');
     if(dmgBal>=1)        pros.push(`Mixed damage (${phys} phys + ${mag} magic) — hard to one-item counter`);
     if(ccCount>=3)       pros.push(`Strong CC chain (${ccCount} heroes) — enemies stay locked`);
-    if(synHits.length>0) pros.push(`${synHits.length} synergy combo${synHits.length>1?'s":''}: ${synHits.map(s=>s.pair).slice(0,2).join(', ')}`);
+    if(synHits.length>0) pros.push(synHits.length+' synergy combo'+(synHits.length>1?'s':'')+': '+synHits.map(s=>s.pair).slice(0,2).join(', '));
     if(avgLate>=4)       pros.push('Excellent late-game scaling — wins extended games');
     if(avgEarly>=4)      pros.push('Strong early spike — snowball before enemies scale');
     if(avgTF>=4)         pros.push(`High teamfight rating (${avgTF.toFixed(1)}/5) — dominates 5v5`);
