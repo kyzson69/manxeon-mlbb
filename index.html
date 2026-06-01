@@ -2180,13 +2180,18 @@ function _mlbbRun() {
     if (!el) { setTimeout(_mlbbRun, 50); return; }
     _mlbbDone = true;
     try {
+        console.log('[MLBB] applyData start');
         applyData(FALLBACK_DATA);
+        console.log('[MLBB] applyData done, heroes:', HEROES.length);
         setStatus('green', 'Patch ' + (PATCH_INFO.patch||'2.1.70') + ' · ' + HEROES.length + ' heroes loaded');
         applyPatchBadge();
+        console.log('[MLBB] renderApp start');
         renderApp();
+        console.log('[MLBB] renderApp done');
     } catch(e) {
+        console.error('[MLBB] Error:', e);
         var el2 = document.getElementById('mx-main');
-        if (el2) el2.innerHTML = '<div style="padding:16px;font-family:Arial;color:#dc2626;border:1px solid #fecaca;border-radius:8px;background:#fef2f2"><strong>Error:</strong> ' + (e.message||'unknown') + '</div>';
+        if (el2) el2.innerHTML = '<div style="padding:16px;font-family:Arial;color:#dc2626;border:1px solid #fecaca;border-radius:8px;background:#fef2f2"><strong>Error:</strong> ' + (e.message||'unknown') + '<br><small>' + (e.stack||'') + '</small></div>';
         var sd = document.getElementById('mx-status-dot');
         var st = document.getElementById('mx-status-text');
         if (sd) sd.className = 'manxeon-status-dot red';
@@ -2195,19 +2200,11 @@ function _mlbbRun() {
 }
 
 _mlbbRun();
+// Run immediately if DOM ready, otherwise wait
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', _mlbbRun);
-}
-window.addEventListener('load', _mlbbRun);
-
-if (typeof MutationObserver !== 'undefined') {
-    var _mlbbObs = new MutationObserver(function() {
-        if (!_mlbbDone && document.getElementById('mx-main')) {
-            _mlbbObs.disconnect();
-            _mlbbRun();
-        }
-    });
-    _mlbbObs.observe(document.body || document.documentElement, { childList: true, subtree: true });
+} else {
+    _mlbbRun();
 }
 </script>
 
